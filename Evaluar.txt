@@ -1,0 +1,97 @@
+Voy a proporcionarte ejemplos básicos para cumplir con cada uno de los requisitos utilizando la base de datos que proporcionaste. Ten en cuenta que estos ejemplos son simples y deben ajustarse según las necesidades y la lógica específica de tu aplicación.
+
+### 1. Trigger:
+
+```sql
+DELIMITER //
+
+CREATE TRIGGER `actualizar_fecha_venta`
+BEFORE UPDATE ON `venta` FOR EACH ROW
+BEGIN
+    SET NEW.fecha_venta = NOW();
+END;
+//
+DELIMITER ;
+```
+
+Este trigger actualiza automáticamente la fecha de venta antes de realizar una actualización en la tabla `venta`.
+
+### 2. Procedimiento Almacenado:
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE `sp_obtener_ventas_por_cliente`(IN cliente_nombre VARCHAR(40))
+BEGIN
+    SELECT v.*, c.nombre AS nombre_cliente
+    FROM venta v
+    JOIN contacto c ON v.num_cotizacion = c.num_cotizacion
+    WHERE c.nombre = cliente_nombre;
+END;
+//
+DELIMITER ;
+```
+
+Este procedimiento almacenado devuelve las ventas asociadas a un cliente específico.
+
+### 3. Usuarios:
+
+```sql
+CREATE USER 'Usuario1'@'localhost' IDENTIFIED BY 'clave_usuario1';
+GRANT SELECT, INSERT ON `luxoflex`.* TO 'Usuario1'@'localhost';
+
+CREATE USER 'Usuario2'@'localhost' IDENTIFIED BY 'clave_usuario2';
+GRANT SELECT, UPDATE ON `luxoflex`.* TO 'Usuario2'@'localhost';
+```
+
+Crea dos usuarios: `Usuario1` con permisos de selección e inserción, y `Usuario2` con permisos de selección y actualización.
+
+### 4. Vistas de Consultas Multitablas:
+
+```sql
+CREATE VIEW `vista_ventas_detalles` AS
+SELECT v.*, c.nombre AS nombre_cliente, e.tipo_forma AS tipo_etiqueta
+FROM venta v
+JOIN contacto c ON v.num_cotizacion = c.num_cotizacion
+JOIN etiqueta e ON v.id_forma = e.id_forma;
+
+CREATE VIEW `vista_domicilios_etiquetas` AS
+SELECT d.*, e.tipo_forma AS tipo_etiqueta
+FROM domicilio d
+JOIN etiqueta e ON d.id_domicilio = e.id_forma;
+```
+
+Estas vistas combinan información de múltiples tablas para facilitar consultas específicas.
+
+### 5. Informes en PDF:
+
+Para generar informes en PDF, generalmente necesitarás utilizar un lenguaje de programación como PHP, Python, o Java junto con bibliotecas específicas. Aquí hay un ejemplo simple utilizando PHP y la biblioteca FPDF:
+
+```php
+<?php
+require('fpdf.php');
+
+class PDF extends FPDF {
+    function Header() {
+        $this->SetFont('Arial','B',12);
+        $this->Cell(0,10,'Informe de Ventas',0,1,'C');
+        $this->Ln(10);
+    }
+
+    function Footer() {
+        $this->SetY(-15);
+        $this->SetFont('Arial','I',8);
+        $this->Cell(0,10,'Página '.$this->PageNo(),0,0,'C');
+    }
+}
+
+$pdf = new PDF();
+$pdf->AddPage();
+
+// Aquí agregarías las consultas y la lógica para obtener la información del informe
+
+$pdf->Output();
+?>
+```
+
+Este es un ejemplo básico. Necesitarás adaptarlo según tus necesidades específicas y los datos que desees incluir en el informe PDF.
