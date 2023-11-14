@@ -4,7 +4,7 @@ function conectarBaseDeDatos($servername, $username, $password, $database)
     $conn = new mysqli($servername, $username, $password, $database);
 
     if ($conn->connect_error) {
-        die("Error de conexión: " . $conn->connect_error);
+        throw new Exception("Error de conexión: " . $conn->connect_error);
     }
 
     return $conn;
@@ -33,19 +33,28 @@ $username = "root";
 $password = "";
 $database = "luxoflex";
 
-$conn = conectarBaseDeDatos($servername, $username, $password, $database);
+try {
+    $conn = conectarBaseDeDatos($servername, $username, $password, $database);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
-    $usuario_a_eliminar = $_POST['eliminar'];
-    eliminarUsuario($conn, $usuario_a_eliminar);
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
+        $usuario_a_eliminar = $_POST['eliminar'];
+        eliminarUsuario($conn, $usuario_a_eliminar);
 
-    // Redirigir para evitar reenvío del formulario
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); // Asegura que el script se detenga después de redirigir
+        // Redirigir para evitar reenvío del formulario
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit(); // Asegura que el script se detenga después de redirigir
+    }
+
+    $usuarios_a_excluir = ['root', 'pma', 'Admin'];
+
+    $sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv
+    FROM mysql.user
+    WHERE User NOT IN ('" . implode("','", $usuarios_a_excluir) . "')";
+    
+    $result = $conn->query($sql);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
-
-$sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv FROM mysql.user";
-$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -53,21 +62,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Listar y Eliminar Usuarios</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 70%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="estilos.css">
 </head>
 <body>
 
@@ -115,3 +110,4 @@ $result = $conn->query($sql);
 
 </body>
 </html>
+
