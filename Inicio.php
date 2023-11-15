@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <title>Mi Página Web</title>
@@ -27,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="logo">
                 <a href="/">
-                    <img src="img/neontools.svg" alt="Logo de la página" />
+                    <img src="" alt="Luxo Flex" />
                 </a>
                 <div class="menu-toggle">
                     <input type="checkbox" />
@@ -49,8 +50,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
     </header>
-
-    <!-- Aquí puedes agregar el contenido principal de tu página -->
-
 </body>
 </html>
