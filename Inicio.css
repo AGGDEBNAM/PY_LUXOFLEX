@@ -1,21 +1,22 @@
-body {
-  font-family: Arial, sans-serif;
-  color: #e8e6e3;
-  background-color: #1a1c1e;
-  margin: 0;
-  font-size: 0.875rem;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: bold;
-  line-height: 1.43;
-  letter-spacing: 0.01071em;
+html {
+  height: 100%;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: linear-gradient(#141e30, #243b55);
+}
+
+/* HEADER CODE*/
+
 header {
-  padding: 10px 0;
+  padding: 20px 0;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  color: #1a1c1e;
+  color: #0D131A;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: #1a1c1e;
+  background-color: #0D131A;
 }
 
 nav {
@@ -33,26 +34,12 @@ nav {
   text-decoration: none;
   color: #ffffff;
   font-size: 1.5em;
-  margin-right: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .logo img {
   max-height: 50px;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  height: 3px;
-  width: 25px;
-  background-color: #ffffff;
-  margin: 5px 0;
-  display: block;
-  transition: 0.3s;
 }
 
 .menu {
@@ -78,25 +65,33 @@ nav {
 }
 
 .menu a:hover {
-  color: #ecf0f1;
+  color: #03e9f4;
 }
 
 .cta-buttons {
   display: flex;
   align-items: center;
+  margin-right: 15px;
 }
 
-.button {
-  background-color: #2300a3; /* Azul marino claro */
-  color: #ffffff;
+.cta-buttons .button {
+  color: #243b55;
+  display: inline-block;
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
-  margin-left: 15px;
   text-decoration: none;
   transition: 0.3s;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 3px;
+  overflow: hidden;
+  text-transform: uppercase;
 }
 
-.button:hover {
-  background-color: #81d8d0; /* Azul marino más oscuro */
+.cta-buttons .button:hover {
+  background: #243b55;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #243b55, 0 0 10px #243b55, 0 0 20px #243b55, 0 0 40px #243b55;
 }

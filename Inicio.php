@@ -1,14 +1,13 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verificar si se hizo clic en el botón de inicio de sesión
+
     if (isset($_POST["login"])) {
-        header("Location: login.php"); // Cambia "archivo_login.php" al nombre de tu archivo de inicio de sesión
+        header("Location: login.php");
         exit();
     }
 
-    // Verificar si se hizo clic en el botón de registro
     if (isset($_POST["signup"])) {
-        header("Location: registro.php"); // Cambia "archivo_signup.php" al nombre de tu archivo de registro
+        header("Location: registro.php");
         exit();
     }
 }
@@ -19,8 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8" />
-    <title>Mi Página Web</title>
-    <link rel="stylesheet" type="text/css" href="Inicio.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXO FLEX</title>
+    <link rel="stylesheet" type="text/css" href="inicio.css" />
 </head>
 
 <body>
@@ -28,12 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="logo">
                 <a href="/">
-                    <img src="" alt="Luxo Flex" />
+                    <img src="LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
-                <div class="menu-toggle">
-                    <input type="checkbox" />
-                    <span></span><span></span><span></span>
-                </div>
             </div>
             <div class="menu">
                 <ul>
@@ -42,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </div>
             <div class="cta-buttons">
-                <!-- Agregando un formulario para manejar la acción del clic -->
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <button type="submit" name="login" class="button">Log in</button>
                     <button type="submit" name="signup" class="button">Sign up</button>
@@ -51,4 +46,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </nav>
     </header>
 </body>
+
 </html>
