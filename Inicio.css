@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header {
+    background-color: #001f3f; /* Azul marino oscuro */
+    color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+.logo img {
+    max-height: 50px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background-color: #ffffff;
+    margin: 5px 0;
+    display: block;
+    transition: 0.3s;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.menu li {
+    margin: 0 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2em;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    color: #ecf0f1;
+}
+
+.cta-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.button {
+    background-color: #0074cc; /* Azul marino claro */
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 15px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background-color: #005b9f; /* Azul marino más oscuro */
+}

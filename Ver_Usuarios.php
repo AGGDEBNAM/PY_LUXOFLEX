@@ -50,7 +50,7 @@ try {
     $sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv
     FROM mysql.user
     WHERE User NOT IN ('" . implode("','", $usuarios_a_excluir) . "')";
-    
+
     $result = $conn->query($sql);
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
@@ -59,55 +59,58 @@ try {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Listar y Eliminar Usuarios</title>
-    <link rel="stylesheet" type="text/css" href="estilos.css">
+    <link rel="stylesheet" type="text/css" href="Ver_Usuarios.css">
 </head>
+
 <body>
 
-<?php if ($result->num_rows > 0): ?>
-    <h2>Usuarios en MySQL:</h2>
-    <table>
-        <tr>
-            <th>Usuario</th>
-            <th>Host</th>
-            <th>Permisos</th>
-            <th>Database</th>
-            <th>Eliminar</th>
-        </tr>
+    <h1>Usuarios en MySQL:</h1>
 
-        <?php while ($row = $result->fetch_assoc()): ?>
+    <?php if ($result->num_rows > 0) : ?>
+        <table>
             <tr>
-                <td><?= $row['User'] ?></td>
-                <td><?= $row['Host'] ?></td>
-                <td>
-                    SELECT: <?= $row['Select_priv'] ?>
-                    INSERT: <?= $row['Insert_priv'] ?>
-                    UPDATE: <?= $row['Update_priv'] ?>
-                    DELETE: <?= $row['Delete_priv'] ?><br>
-                    CREATE: <?= $row['Create_priv'] ?>
-                    DROP: <?= $row['Drop_priv'] ?>
-                    GRANT: <?= $row['Grant_priv'] ?>
-                    REFERENCES: <?= $row['References_priv'] ?>
-                </td>
-                <td><?= $database ?></td>
-                <td>
-                    <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-                        <input type="hidden" name="eliminar" value="<?= $row['User'] . '@' . $row['Host'] ?>">
-                        <input type="submit" value="Eliminar">
-                    </form>
-                </td>
+                <th>Usuario</th>
+                <th>Host</th>
+                <th>Permisos</th>
+                <th>Database</th>
+                <th>Eliminar</th>
             </tr>
-        <?php endwhile; ?>
 
-    </table>
-<?php else: ?>
-    <p>No se encontraron usuarios.</p>
-<?php endif; ?>
+            <?php while ($row = $result->fetch_assoc()) : ?>
+                <tr>
+                    <td><?= $row['User'] ?></td>
+                    <td><?= $row['Host'] ?></td>
+                    <td>
+                        SELECT: <?= $row['Select_priv'] ?>
+                        INSERT: <?= $row['Insert_priv'] ?>
+                        UPDATE: <?= $row['Update_priv'] ?>
+                        DELETE: <?= $row['Delete_priv'] ?><br>
+                        CREATE: <?= $row['Create_priv'] ?>
+                        DROP: <?= $row['Drop_priv'] ?>
+                        GRANT: <?= $row['Grant_priv'] ?>
+                        REFERENCES: <?= $row['References_priv'] ?>
+                    </td>
+                    <td><?= $database ?></td>
+                    <td>
+                        <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                            <input type="hidden" name="eliminar" value="<?= $row['User'] . '@' . $row['Host'] ?>">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
 
-<?php $conn->close(); ?>
+        </table>
+    <?php else : ?>
+        <p>No se encontraron usuarios.</p>
+    <?php endif; ?>
+
+    <?php $conn->close(); ?>
 
 </body>
-</html>
 
+</html>
