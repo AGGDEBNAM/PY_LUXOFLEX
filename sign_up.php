@@ -1,12 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
     if (isset($_POST["login"])) {
         header("Location: login.php");
         exit();
     }
 
-    
+
     if (isset($_POST["signup"])) {
         header("Location: sign_up.php");
         exit();
@@ -14,13 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
+    <title>Sing Up Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" type="text/css" href="sign_up.css">
 </head>
 
 <body>
@@ -48,41 +48,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <div class="login-box">
-        <h2>Login</h2>
+        <h2>Sign Up</h2>
 
         <?php
-        $servername = "localhost";
-        $database = "luxoflex";
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Si se ha enviado el formulario, procesa los datos
 
-            $usuario = $_POST['username'];
-            $contrasena = $_POST['password'];
+            // Recuperar los datos del formulario
+            $nombre_usuario = $_POST['in_username'];
+            $contrasena = $_POST['in_password'];
 
-            try {
-                $conn = new mysqli($servername, $usuario, $contrasena, $database);
+            // Conectar a la base de datos (ajusta las credenciales según tu configuración)
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $database = "luxoflex";
 
-                if ($conn->connect_error) {
-                    die("Error de conexión: " . $conn->connect_error);
-                }
+            $conn = new mysqli($servername, $username, $password, $database);
 
-                echo "<p class='success'>Inicio de sesión exitoso para $usuario</p>";
-
-                $conn->close();
-            } catch (mysqli_sql_exception $e) {
-                echo "<p class='message'>Inicio de sesión fallido.<br>Usuario o contraseña incorrectos.</p>";
+            // Verificar la conexión
+            if ($conn->connect_error) {
+                die("Error de conexión: " . $conn->connect_error);
             }
+
+            // Crear el usuario y otorgar privilegios
+            $sql = "CREATE USER '$nombre_usuario'@'localhost' IDENTIFIED BY '$contrasena';";
+            $sql .= "GRANT INSERT, UPDATE, DELETE ON *.* TO '$nombre_usuario'@'localhost';";
+            $sql .= "FLUSH PRIVILEGES;";
+            if ($conn->multi_query($sql) === TRUE) {
+                echo "Usuario creado con éxito";
+
+                // Redirigir a la misma página para evitar la reenviación del formulario
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit(); // Asegura que el script se detenga después de redirigir
+            } else {
+                echo "Error al crear el usuario: " . $conn->error;
+            }
+
+            // Cerrar la conexión
+            $conn->close();
         }
         ?>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="user-box">
-                <input type="text" name="username" required>
+                <input type="text" name="in_username" required>
                 <span></span>
                 <label>Username</label>
             </div>
             <div class="user-box">
-                <input type="password" name="password" required>
+                <input type="password" name="in_password" required>
                 <label>Password</label>
             </div>
             <button type="submit" class="btn">

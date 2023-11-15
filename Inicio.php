@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST["signup"])) {
-        header("Location: registro.php");
+        header("Location: sign_up.php");
         exit();
     }
 }
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
         <nav>
             <div class="logo">
-                <a href="/">
+                <a href="inicio.php">
                     <img src="LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
             </div>
