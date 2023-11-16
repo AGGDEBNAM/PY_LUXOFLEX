@@ -43,7 +43,7 @@ try {
         exit();
     }
 
-    $usuarios_a_excluir = ['root', 'pma', 'Admin'];
+    $usuarios_a_excluir = ['root', 'pma', 'Admin', 'Usuario'];
 
     $sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv
     FROM mysql.user

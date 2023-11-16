@@ -66,26 +66,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $conn = new mysqli($servername, $username, $password, $database);
 
-            // Verificar la conexión
             if ($conn->connect_error) {
                 die("Error de conexión: " . $conn->connect_error);
             }
 
-            // Crear el usuario y otorgar privilegios
             $sql = "CREATE USER '$nombre_usuario'@'localhost' IDENTIFIED BY '$contrasena';";
             $sql .= "GRANT INSERT, UPDATE, DELETE ON *.* TO '$nombre_usuario'@'localhost';";
             $sql .= "FLUSH PRIVILEGES;";
             if ($conn->multi_query($sql) === TRUE) {
                 echo "Usuario creado con éxito";
 
-                // Redirigir a la misma página para evitar la reenviación del formulario
                 header("Location: " . $_SERVER['PHP_SELF']);
-                exit(); // Asegura que el script se detenga después de redirigir
             } else {
                 echo "Error al crear el usuario: " . $conn->error;
             }
 
-            // Cerrar la conexión
             $conn->close();
         }
         ?>
