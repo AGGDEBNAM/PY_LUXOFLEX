@@ -172,6 +172,16 @@ ALTER TABLE `venta`
   ADD CONSTRAINT `venta_ibfk_3` FOREIGN KEY (`id_contacto`) REFERENCES `contacto` (`id_contacto`);
 COMMIT;
 
+DROP USER 'Admin'@'localhost';
+DROP USER 'Usuario'@'localhost';
+
+
+CREATE USER 'Admin'@'localhost' IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON *.* TO 'Admin'@'localhost';
+CREATE USER 'Usuario'@'localhost' IDENTIFIED BY '2410';
+GRANT INSERT, UPDATE, DELETE ON *.* TO 'Usuario'@'localhost';
+FLUSH PRIVILEGES;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
