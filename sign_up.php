@@ -1,4 +1,10 @@
 <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "luxoflex";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["login"])) {
@@ -52,40 +58,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Si se ha enviado el formulario, procesa los datos
-
-            // Recuperar los datos del formulario
-            $nombre_usuario = $_POST['in_username'];
-            $contrasena = $_POST['in_password'];
-
-            // Conectar a la base de datos (ajusta las credenciales según tu configuración)
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $database = "luxoflex";
 
             $conn = new mysqli($servername, $username, $password, $database);
 
-            // Verificar la conexión
+            $nombre_usuario = $_POST['in_username'];
+            $contrasena = $_POST['in_password'];
+
             if ($conn->connect_error) {
                 die("Error de conexión: " . $conn->connect_error);
             }
 
-            // Crear el usuario y otorgar privilegios
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $nombre = $_POST['in_username'];
+                $empresa = "Alen";
+                $email = $_POST['in_email'];
+                $telefono = $_POST['in_tel'];
+                $num_cotizacion = "1";
+
+                $sql = "INSERT INTO contacto (nombre, empresa, email, telefono, num_cotizacion) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+
+                if ($stmt) {
+                    $stmt->bind_param("ssssi", $nombre, $empresa, $email, $telefono, $num_cotizacion);
+
+                    if ($stmt->execute()) {
+                        echo "Nuevo contacto insertado con éxito.";
+                    } else {
+                        echo "Error al insertar el contacto: " . $stmt->error;
+                    }
+
+                    $stmt->close();
+                } else {
+                    echo "Error al preparar la consulta: " . $conn->error;
+                }
+            }
+
             $sql = "CREATE USER '$nombre_usuario'@'localhost' IDENTIFIED BY '$contrasena';";
             $sql .= "GRANT INSERT, UPDATE, DELETE ON *.* TO '$nombre_usuario'@'localhost';";
             $sql .= "FLUSH PRIVILEGES;";
             if ($conn->multi_query($sql) === TRUE) {
                 echo "Usuario creado con éxito";
 
-                // Redirigir a la misma página para evitar la reenviación del formulario
                 header("Location: " . $_SERVER['PHP_SELF']);
-                exit(); // Asegura que el script se detenga después de redirigir
+                exit();
             } else {
                 echo "Error al crear el usuario: " . $conn->error;
             }
 
-            // Cerrar la conexión
             $conn->close();
         }
         ?>
@@ -100,6 +119,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" name="in_password" required>
                 <label>Password</label>
             </div>
+            <div class="user-box">
+                <input type="email" name="in_email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+            <div class="user-box">
+                <input type="tel" name="in_tel" required>
+                <label>Phone</label>
+            </div>
             <button type="submit" class="btn">
                 <span></span>
                 <span></span>
@@ -108,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Submit
             </button>
         </form>
+
     </div>
 
 </body>

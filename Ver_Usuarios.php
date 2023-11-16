@@ -23,7 +23,6 @@ function eliminarUsuario($conn, $usuario_a_eliminar)
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage() . "<br>";
-        // Imprime información adicional sobre el error
         echo "Query ejecutada: " . $sql . "<br>";
     }
 }
@@ -40,9 +39,8 @@ try {
         $usuario_a_eliminar = $_POST['eliminar'];
         eliminarUsuario($conn, $usuario_a_eliminar);
 
-        // Redirigir para evitar reenvío del formulario
         header("Location: " . $_SERVER['PHP_SELF']);
-        exit(); // Asegura que el script se detenga después de redirigir
+        exit();
     }
 
     $usuarios_a_excluir = ['root', 'pma', 'Admin'];
@@ -63,6 +61,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Listar y Eliminar Usuarios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="Ver_Usuarios.css">
 </head>
 
