@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2023 at 09:02 AM
+-- Generation Time: Nov 16, 2023 at 04:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,11 +28,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `contacto` (
-  `nombre` varchar(40) NOT NULL,
-  `empresa` varchar(25) DEFAULT NULL,
+  `id_contacto` int(11) NOT NULL,
+  `user_name` varchar(40) NOT NULL,
+  `password` varchar(25) DEFAULT NULL,
   `email` varchar(75) DEFAULT NULL,
   `telefono` bigint(20) DEFAULT NULL,
-  `num_cotizacion` int(11) DEFAULT NULL
+  `empresa` varchar(25) DEFAULT NULL,
+  `id_domicilio` tinyint(3) NOT NULL,
+  `num_cotizacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -44,9 +47,10 @@ CREATE TABLE `contacto` (
 CREATE TABLE `domicilio` (
   `id_domicilio` int(11) NOT NULL,
   `pais` varchar(20) DEFAULT NULL,
-  `Estado` varchar(45) DEFAULT NULL,
-  `extenciion` char(1) DEFAULT NULL,
-  `codigo_postal` int(6) DEFAULT NULL,
+  `ciudad` varchar(20) DEFAULT NULL,
+  `Estado` varchar(55) DEFAULT NULL,
+  `direccion` varchar(65) DEFAULT NULL,
+  `codigo_postal` int(5) DEFAULT NULL,
   `rfc` varchar(13) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -57,17 +61,16 @@ CREATE TABLE `domicilio` (
 --
 
 CREATE TABLE `etiqueta` (
-  `id_forma` int(11) NOT NULL,
+  `id_etiqueta` int(11) NOT NULL,
   `tipo_forma` varchar(20) DEFAULT NULL,
   `medida_ancho` smallint(6) DEFAULT NULL,
   `medida_alto` smallint(6) DEFAULT NULL,
-  `medida_diametro` smallint(6) DEFAULT NULL,
   `medida_circunferencia` smallint(6) DEFAULT NULL,
-  `aplicacion` varchar(50) DEFAULT NULL,
-  `material` varchar(30) DEFAULT NULL,
-  `forma_aplicacion` int(11) DEFAULT NULL,
-  `cantidad_de_colores` tinyint(4) DEFAULT NULL,
-  `nombre_colores` tinytext DEFAULT NULL
+  `material_etiqueta` varchar(30) DEFAULT NULL,
+  `material_aplicacion` varchar(30) DEFAULT NULL,
+  `cantidad_de_colores` smallint(6) DEFAULT NULL,
+  `colores` varchar(80) DEFAULT NULL,
+  `disenio` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -78,10 +81,8 @@ CREATE TABLE `etiqueta` (
 
 CREATE TABLE `venta` (
   `num_cotizacion` int(11) NOT NULL,
-  `id_domicilio` int(11) DEFAULT NULL,
-  `id_forma` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `disenio` varchar(255) DEFAULT NULL,
+  `id_etiqueta` int(11) DEFAULT NULL,
   `comentarios` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -93,7 +94,8 @@ CREATE TABLE `venta` (
 -- Indexes for table `contacto`
 --
 ALTER TABLE `contacto`
-  ADD PRIMARY KEY (`nombre`),
+  ADD PRIMARY KEY (`id_contacto`),
+  ADD KEY `id_domicilio` (`id_domicilio`),
   ADD KEY `num_cotizacion` (`num_cotizacion`);
 
 --
@@ -106,19 +108,24 @@ ALTER TABLE `domicilio`
 -- Indexes for table `etiqueta`
 --
 ALTER TABLE `etiqueta`
-  ADD PRIMARY KEY (`id_forma`);
+  ADD PRIMARY KEY (`id_etiqueta`);
 
 --
 -- Indexes for table `venta`
 --
 ALTER TABLE `venta`
   ADD PRIMARY KEY (`num_cotizacion`),
-  ADD KEY `id_domicilio` (`id_domicilio`),
-  ADD KEY `id_forma` (`id_forma`);
+  ADD KEY `id_etiqueta` (`id_etiqueta`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `contacto`
+--
+ALTER TABLE `contacto`
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `domicilio`
@@ -130,38 +137,14 @@ ALTER TABLE `domicilio`
 -- AUTO_INCREMENT for table `etiqueta`
 --
 ALTER TABLE `etiqueta`
-  MODIFY `id_forma` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_etiqueta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
---
-
---
--- Constraints for table `contacto`
---
-ALTER TABLE `contacto`
-  ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`num_cotizacion`) REFERENCES `venta` (`num_cotizacion`);
-
---
--- Constraints for table `venta`
+-- AUTO_INCREMENT for table `venta`
 --
 ALTER TABLE `venta`
-  ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_domicilio`) REFERENCES `domicilio` (`id_domicilio`),
-  ADD CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`id_forma`) REFERENCES `etiqueta` (`id_forma`);
+  MODIFY `num_cotizacion` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
-
-
-DROP USER 'Admin'@'localhost';
-DROP USER 'Usuario'@'localhost';
-
-
-CREATE USER 'Admin'@'localhost' IDENTIFIED BY '123';
-GRANT ALL PRIVILEGES ON *.* TO 'Admin'@'localhost';
-CREATE USER 'Usuario'@'localhost' IDENTIFIED BY '2410';
-GRANT INSERT, UPDATE, DELETE ON *.* TO 'Usuario'@'localhost';
-FLUSH PRIVILEGES;
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
