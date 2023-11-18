@@ -33,8 +33,7 @@ CREATE TABLE `contacto` (
   `password` varchar(25) DEFAULT NULL,
   `email` varchar(75) DEFAULT NULL,
   `telefono` bigint(20) DEFAULT NULL,
-  `empresa` varchar(25) DEFAULT NULL,
-  `num_cotizacion` int(11) NOT NULL
+  `empresa` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -97,8 +96,7 @@ CREATE TABLE `venta` (
 -- Indexes for table `contacto`
 --
 ALTER TABLE `contacto`
-  ADD PRIMARY KEY (`id_contacto`),
-  ADD KEY `num_cotizacion` (`num_cotizacion`);
+  ADD PRIMARY KEY (`id_contacto`);
 
 --
 -- Indexes for table `domicilio`
@@ -152,20 +150,12 @@ ALTER TABLE `venta`
   MODIFY `num_cotizacion` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
-ALTER TABLE `contacto`
-  ADD CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`num_cotizacion`) REFERENCES `venta` (`num_cotizacion`);
-
-
 ALTER TABLE `etiqueta`
   ADD CONSTRAINT `etiqueta_ibfk_1` FOREIGN KEY (`id_contacto`) REFERENCES `venta` (`id_contacto`);
 
-
-
 ALTER TABLE `domicilio`
   ADD CONSTRAINT `domicilio_ibfk_1` FOREIGN KEY (`id_contacto`) REFERENCES `contacto` (`id_contacto`);
---
--- Constraints for table `venta`
---
+
 ALTER TABLE `venta`
   ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_domicilio`) REFERENCES `domicilio` (`id_domicilio`),
   ADD CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`id_etiqueta`) REFERENCES `etiqueta` (`id_etiqueta`),
