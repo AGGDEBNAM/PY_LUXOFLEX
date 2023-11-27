@@ -40,12 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $_SESSION['message'] = "El nombre de usuario ya existe. Por favor, elige otro.";
     } else {
-        
+
         $insert_query = "INSERT INTO `contacto` (`user_name`, `password`, `email`, `telefono`, `empresa`) 
                  VALUES ('$nombre_usuario', '$contrasena', '$email', '$telefono', '$empresa')";
 
         if ($conn->query($insert_query) === TRUE) {
-            
+
             $_SESSION['success_message'] = "Usuario creado con éxito";
 
             $sql_create_user = "CREATE USER '$nombre_usuario'@'localhost' IDENTIFIED BY '$contrasena';";
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //campo duplicado
             }
 
-            header("Location: " . $_SERVER['PHP_SELF']);
+            header("Location: inicio.php");
             exit();
         } else {
             $_SESSION['error_message'] = "Error al crear el usuario: " . $conn->error;
@@ -77,6 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Sing Up Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="sign_up.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+    </style>
+
 </head>
 
 <body>
@@ -85,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="logo">
                 <a href="inicio.php">
-                    <img src="LUXFLEX.PNG" alt="LUXO FLEX" />
+                    <img src="img_py/LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
             </div>
             <div class="menu">
@@ -107,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Sign Up</h2>
 
         <?php
-        
+
         if (isset($_SESSION['message'])) {
             echo "<p class='message'>" . $_SESSION['message'] . "</p>";
             unset($_SESSION['message']);

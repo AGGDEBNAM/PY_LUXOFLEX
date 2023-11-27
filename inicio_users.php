@@ -1,13 +1,29 @@
 <?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: inicio.php");
+    exit();
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset($_POST["login"])) {
-        header("Location: login.php");
+    if (isset($_POST["etiquetas"])) {
+        header("Location: etiquetas.php");
         exit();
     }
 
-    if (isset($_POST["signup"])) {
-        header("Location: sign_up.php");
+    if (isset($_POST["logout"])) {
+        session_unset();
+        session_destroy();
+        header("Location: inicio.php");
+        exit();
+    }
+
+    if (isset($_POST["perfil"])) {
+        header("Location: perfil.php");
+        exit();
+    }
+    if (isset($_POST["venta"])) {
+        header("Location: venta.php");
         exit();
     }
 }
@@ -20,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUXO FLEX</title>
-    <link rel="stylesheet" href="Inicio.css">
+    <link rel="stylesheet" type="text/css" href="inicio.css" />
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
@@ -32,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
         <nav>
             <div class="logo">
-                <a href="inicio.php">
+                <a href="inicio_users.php">
                     <img src="img_py/LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
             </div>
@@ -44,12 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="cta-buttons">
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <button type="submit" name="login" class="button">Log in</button>
-                    <button type="submit" name="signup" class="button">Sign up</button>
+                    <button type="submit" name="venta" class="button">cotizaciones</button>
+                    <button type="submit" name="etiquetas" class="button">etiquetas</button>
+                    <button type="submit" name="perfil" class="button">perfil</button>
+                    <button type="submit" name="logout" class="button">logout</button>
                 </form>
             </div>
         </nav>
     </header>
+
     <main>
         <ul class='slider'>
             <?php
@@ -62,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'img_py/image5.jpg' => ["SERVICIOS PROFESIONALES", "Comprometidos con la excelencia, ofrecemos servicios profesionales de impresión de etiquetas diseñados para adaptarse a cualquier uso y disposición. Confía en nosotros para realzar la presentación de tus productos."],
                 'img_py/image6.jpg' => ["DIVERSIDAD Y VERSATILIDAD", "En Luxoflex Impresiones, contamos con una amplia gama de materiales y aplicaciones para tus etiquetas. Desde opciones clásicas hasta innovaciones de vanguardia, tenemos la solución perfecta para tu producto."],
             ];
-
 
             foreach ($images as $image => $info) {
                 echo '<li class="item" style="background-image: url(\'' . $image . '\')">';
@@ -83,6 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="inicio.js"></script>
+
 </body>
 
 </html>
