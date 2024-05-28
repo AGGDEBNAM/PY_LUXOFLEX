@@ -60,13 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row_user_name = $result_user_name->fetch_assoc();
 
             if ($row_user_name === null) {
-                throw new Exception("No se encontraron datos para el usuario.");
+                // throw new Exception("No se encontraron datos para el usuario.");
+                echo "<p>No se encontraron datos para el usuario. Redirigiendo a la página de inicio...</p>";
+                header("Refresh: 3; url=inicio.php");
+                exit();
             }
 
             $id_contacto = $row_user_name['id_contacto'];
 
             $insert_query = "INSERT INTO domicilio (pais, ciudad, Estado, direccion, codigo_postal, rfc, id_contacto) 
-                             VALUES ('$pais', '$ciudad', '$estado', '$direccion', $codigo_postal, '$rfc', $id_contacto)";
+                            VALUES ('$pais', '$ciudad', '$estado', '$direccion', $codigo_postal, '$rfc', $id_contacto)";
 
             if ($conn->query($insert_query) === false) {
                 throw new Exception("Error en la consulta SQL: " . $conn->error);
@@ -105,7 +108,10 @@ try {
     $row_user_name = $result_user_name->fetch_assoc();
 
     if ($row_user_name === null) {
-        throw new Exception("No se encontraron datos para el usuario.");
+        // throw new Exception("No se encontraron datos para el usuario.");
+        echo "<p>No se encontraron datos para el usuario. Redirigiendo a la página de inicio...</p>";
+        header("Refresh: 3; url=inicio.php");
+        exit();
     }
 
     $user_name = $row_user_name['user_name'];
@@ -115,8 +121,8 @@ try {
 
     $id_contacto = $row_user_name['id_contacto'];
     $get_domicilios_query = "SELECT id_domicilio, pais, ciudad, Estado, direccion, codigo_postal, rfc
-                             FROM domicilio
-                             WHERE id_contacto = $id_contacto";
+                            FROM domicilio
+                            WHERE id_contacto = $id_contacto";
 
     $result_domicilios = $conn->query($get_domicilios_query);
 

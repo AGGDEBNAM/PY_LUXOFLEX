@@ -69,7 +69,7 @@
                     if ($result->num_rows == 1) {
                         $_SESSION['usuario'] = $usuario;
 
-                        if ($usuario === "admin") {
+                        if ($usuario === "administrador") {
                             header("Location: viewAdmin.php");
                             exit();
                         } else {

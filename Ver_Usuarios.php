@@ -13,17 +13,41 @@ function conectarBaseDeDatos($servername, $username, $password, $database)
 function eliminarUsuario($conn, $usuario_a_eliminar)
 {
     $usuario_a_eliminar = $conn->real_escape_string($usuario_a_eliminar);
-    $sql = "DROP USER IF EXISTS $usuario_a_eliminar";
-
+    
+    // Eliminar el usuario de MySQL
+    $sql_drop_user = "DROP USER IF EXISTS '$usuario_a_eliminar'@'localhost'";
+    
     try {
-        if ($conn->query($sql) === TRUE) {
+        if ($conn->query($sql_drop_user) === TRUE) {
             echo "Usuario eliminado con éxito: $usuario_a_eliminar<br>";
+
+            $sql_delete_venta = "DELETE v FROM venta v
+                                JOIN contacto c ON v.id_contacto = c.id_contacto
+                                WHERE c.user_name = '$usuario_a_eliminar'";
+            $sql_delete_etiqueta = "DELETE e FROM etiqueta e
+            JOIN contacto c ON e.id_contacto = c.id_contacto
+            WHERE c.user_name = '$usuario_a_eliminar'";
+            $sql_delete_domicilio = "DELETE d FROM domicilio d
+            JOIN contacto c ON d.id_contacto = c.id_contacto
+            WHERE c.user_name = '$usuario_a_eliminar'";
+            $sql_delete_contacto = "DELETE FROM contacto WHERE user_name = '$usuario_a_eliminar'";
+            
+
+            if ($conn->query($sql_delete_venta) === TRUE &&
+                $conn->query($sql_delete_etiqueta) === TRUE &&
+                $conn->query($sql_delete_domicilio) === TRUE &&
+                $conn->query($sql_delete_contacto) === TRUE) {
+                echo "Datos asociados eliminados con éxito para el usuario: $usuario_a_eliminar<br>";
+            } else {
+                throw new Exception("Error al eliminar los datos asociados: " . $conn->error);
+            }
+
         } else {
             throw new Exception("Error al eliminar el usuario: " . $conn->error);
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage() . "<br>";
-        echo "Query ejecutada: " . $sql . "<br>";
+        echo "Query ejecutada: " . $sql_drop_user . "<br>";
     }
 }
 
@@ -43,11 +67,11 @@ try {
         exit();
     }
 
-    $usuarios_a_excluir = ['root', 'pma', 'Admin', 'Usuario'];
+    $usuarios_a_excluir = ['root', 'pma', 'administrador', 'Usuario'];
 
     $sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv
-    FROM mysql.user
-    WHERE User NOT IN ('" . implode("','", $usuarios_a_excluir) . "')";
+            FROM mysql.user
+            WHERE User NOT IN ('" . implode("','", $usuarios_a_excluir) . "')";
 
     $result = $conn->query($sql);
 } catch (Exception $e) {
@@ -96,7 +120,7 @@ try {
                     <td><?= $database ?></td>
                     <td>
                         <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-                            <input type="hidden" name="eliminar" value="<?= $row['User'] . '@' . $row['Host'] ?>">
+                            <input type="hidden" name="eliminar" value="<?= $row['User'] ?>">
                             <input type="submit" value="Eliminar">
                         </form>
                     </td>

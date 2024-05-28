@@ -54,7 +54,7 @@ CREATE TABLE `contacto` (
 INSERT INTO `contacto` (`id_contacto`, `user_name`, `password`, `email`, `telefono`, `empresa`) VALUES
 (4, 'damian', '123', 'damian@ceti.mx', 3322052692, 'luxoflex'),
 (5, 'Damian123', '123', 'damian@ceti.mx', 332205, 'luxoflex'),
-(6, 'admin', '123', 'admin@gmail.com', 3322052692, 'luxoflex');
+(6, 'administrador', '123', 'administrador@gmail.com', 3365879272, 'luxoflex');
 
 -- --------------------------------------------------------
 
@@ -263,6 +263,16 @@ ALTER TABLE `venta`
   ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_domicilio`) REFERENCES `domicilio` (`id_domicilio`),
   ADD CONSTRAINT `venta_ibfk_2` FOREIGN KEY (`id_etiqueta`) REFERENCES `etiqueta` (`id_etiqueta`),
   ADD CONSTRAINT `venta_ibfk_3` FOREIGN KEY (`id_contacto`) REFERENCES `contacto` (`id_contacto`);
+
+-- Admin
+
+BEGIN;
+DROP USER IF EXISTS 'administrador'@'localhost';
+CREATE USER 'administrador'@'localhost' IDENTIFIED BY '123';
+GRANT ALL PRIVILEGES ON *.* TO 'administrador'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
