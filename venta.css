@@ -272,7 +272,7 @@ h2 {
   width: 100%;
 }
 
-
+/*
 .card-perfil .card-venta select:hover {
   background: #4f3c8954;
   color: #3e4446;
@@ -280,9 +280,62 @@ h2 {
   box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
     0 0 40px #4f3c8954;
 }
+*/
+
+.card-perfil .card-venta select:hover {
+  background: #243b55;
+  color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #243b55, 0 0 10px #243b55, 0 0 20px #243b55,
+    0 0 40px #243b55;
+  transform: scale(1.05);
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+}
+
+/* tables */
+
+th,
+td {
+  border: 1px solid #3e4446;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #243b55;
+}
+
+tr:nth-child(even) {
+  background-color: #0d131a;
+}
+
+tr:nth-child(odd) {
+  background-color: #141e30;
+}
+
+button {
+  background-color: #03e9f4;
+  color: #ffffff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #01c0e6;
+}
+
+table img.design-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
 }

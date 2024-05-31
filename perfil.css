@@ -6,7 +6,7 @@ body {
   padding: 0;
   background-color: #141e30;
   /*background: linear-gradient(#141e30, #243b55);*/
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   font-weight: 300;
 }
 
@@ -132,18 +132,19 @@ nav {
   background: #00000080;
 }
 
-.card-perfil h1, h2 {
+.card-perfil h1,
+h2 {
   color: #3e3b8f54;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'Kanit', Light 300;
+  font-family: "Kanit", Light 300;
 }
 
-.card-perfil p{
+.card-perfil p {
   color: #4f3c8954;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'Kanit', Light 300;
+  font-family: "Kanit", Light 300;
   background-color: #00000080;
   padding: 10px;
   border-radius: 15px;
@@ -156,7 +157,7 @@ nav {
   flex-wrap: wrap;
 }
 
-.card-perfil .card-domicilio{
+.card-perfil .card-domicilio {
   display: flex;
   flex-wrap: wrap;
   gap: 1px;
@@ -183,7 +184,7 @@ nav {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #3E4446;
+  color: #3e4446;
   margin-bottom: 10px;
   border: none;
   border-bottom: 1px solid #3e4446;
@@ -209,7 +210,7 @@ nav {
 
 .card-perfil .card-domicilio button:hover {
   background: #4f3c8954;
-  color: #fff;
+  color: #3e4446;
   border-radius: 5px;
   box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
     0 0 40px #4f3c8954;
@@ -253,4 +254,48 @@ button {
 
 button:hover {
   background-color: #01c0e6;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-container form {
+  margin: 0;
+}
+
+.button-container button {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+}
+
+.button-container button[name="editar_domicilio"] {
+  background-color: #4caf4f77;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button[name="delete_domicilio"] {
+  background-color: #f4433677;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button i {
+  font-size: 18px;
+}
+
+.button-container button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }

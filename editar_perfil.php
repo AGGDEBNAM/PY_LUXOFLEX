@@ -21,7 +21,7 @@ $sql = "SELECT id_contacto, user_name, email, telefono, empresa FROM contacto WH
 $result = $conn->query($sql);
 $perfil = $result->fetch_assoc();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['actualizar'])) {
     // Recoger y validar los datos aquí
     $email = $_POST["email"];
     $telefono = $_POST["telefono"];
@@ -38,23 +38,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: perfil.php");
     exit();
 }
+
+// Manejar otras acciones del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["etiquetas"])) {
+        header("Location: etiquetas.php");
+        exit();
+    }
+
+    if (isset($_POST["logout"])) {
+        session_unset();
+        session_destroy();
+        header("Location: inicio.php");
+        exit();
+    }
+
+    if (isset($_POST["perfil"])) {
+        header("Location: perfil.php");
+        exit();
+    }
+
+    if (isset($_POST["venta"])) {
+        header("Location: venta.php");
+        exit();
+    }
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LUXO FLEX</title>
-        <link rel="stylesheet" type="text/css" href="etiquetas.css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
-        </style>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXO FLEX</title>
+    <link rel="stylesheet" type="text/css" href="Perfil.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+    </style>
 </head>
+
 <body>
-<header>
+    <header>
         <nav>
             <div class="logo">
                 <a href="inicio_users.php">
@@ -93,8 +120,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="empresa">Nombre de la empresa:</label>
                 <input type="text" name="empresa" value="<?php echo $perfil['empresa']; ?>" required>
             </div>
-            <button type="submit" class="button">Actualizar Perfil</button>
+            <div class="card-domicilio">
+            <button type="submit" name="actualizar" class="button">Actualizar Perfil</button>
+            </div>
         </form>
     </div>
 </body>
+
 </html>

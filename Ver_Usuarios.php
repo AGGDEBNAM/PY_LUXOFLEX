@@ -13,10 +13,10 @@ function conectarBaseDeDatos($servername, $username, $password, $database)
 function eliminarUsuario($conn, $usuario_a_eliminar)
 {
     $usuario_a_eliminar = $conn->real_escape_string($usuario_a_eliminar);
-    
+
     // Eliminar el usuario de MySQL
     $sql_drop_user = "DROP USER IF EXISTS '$usuario_a_eliminar'@'localhost'";
-    
+
     try {
         if ($conn->query($sql_drop_user) === TRUE) {
             echo "Usuario eliminado con éxito: $usuario_a_eliminar<br>";
@@ -31,17 +31,18 @@ function eliminarUsuario($conn, $usuario_a_eliminar)
             JOIN contacto c ON d.id_contacto = c.id_contacto
             WHERE c.user_name = '$usuario_a_eliminar'";
             $sql_delete_contacto = "DELETE FROM contacto WHERE user_name = '$usuario_a_eliminar'";
-            
 
-            if ($conn->query($sql_delete_venta) === TRUE &&
+
+            if (
+                $conn->query($sql_delete_venta) === TRUE &&
                 $conn->query($sql_delete_etiqueta) === TRUE &&
                 $conn->query($sql_delete_domicilio) === TRUE &&
-                $conn->query($sql_delete_contacto) === TRUE) {
+                $conn->query($sql_delete_contacto) === TRUE
+            ) {
                 echo "Datos asociados eliminados con éxito para el usuario: $usuario_a_eliminar<br>";
             } else {
                 throw new Exception("Error al eliminar los datos asociados: " . $conn->error);
             }
-
         } else {
             throw new Exception("Error al eliminar el usuario: " . $conn->error);
         }

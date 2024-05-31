@@ -44,9 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_etiqueta"])) {
     $material_aplicacion = $_POST['material_aplicacion'];
     $cantidad_de_colores = $_POST['cantidad_de_colores'];
     $colores = $_POST['colores'];
+    $ruta = $etiqueta['disenio'];
 
     // Manejar la carga del archivo de diseño, si es necesario
-    if (isset($_FILES["disenio"])) {
+    if (isset($_FILES["disenio"]) && $_FILES["disenio"]["error"] == 0) {
         $imagen = $_FILES["disenio"];
         $directorioDestino = "imagenes/";
         $ruta = $directorioDestino . basename($imagen["name"]);
@@ -64,19 +65,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_etiqueta"])) {
     header("Location: etiquetas.php");
     exit();
 }
+
+// Manejar otras acciones del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["etiquetas"])) {
+        header("Location: etiquetas.php");
+        exit();
+    }
+
+    if (isset($_POST["logout"])) {
+        session_unset();
+        session_destroy();
+        header("Location: inicio.php");
+        exit();
+    }
+
+    if (isset($_POST["perfil"])) {
+        header("Location: perfil.php");
+        exit();
+    }
+
+    if (isset($_POST["venta"])) {
+        header("Location: venta.php");
+        exit();
+    }
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LUXO FLEX</title>
-        <link rel="stylesheet" type="text/css" href="etiquetas.css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
-        </style>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXO FLEX</title>
+    <link rel="stylesheet" type="text/css" href="Etiquetas.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+    </style>
+</head>
 <body>
     <header>
         <nav>
@@ -179,8 +207,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_etiqueta"])) {
                 <label for="disenio">Seleccionar Archivo (opcional):</label>
                 <input type="file" name="disenio" id="disenio" accept="image/*">
             </div>
-
+            
+            <div class="card-etiqueta">
             <button type="submit" name="update_etiqueta" class="button">Actualizar Etiqueta</button>
+            </div>
+
         </form>
     </div>
 </body>

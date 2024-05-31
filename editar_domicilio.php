@@ -50,19 +50,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_domicilio"])) {
     header("Location: perfil.php");
     exit();
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["etiquetas"])) {
+        header("Location: etiquetas.php");
+        exit();
+    }
+
+    if (isset($_POST["logout"])) {
+        session_unset();
+        session_destroy();
+        header("Location: inicio.php");
+        exit();
+    }
+
+    if (isset($_POST["perfil"])) {
+        header("Location: perfil.php");
+        exit();
+    }
+
+    if (isset($_POST["venta"])) {
+        header("Location: venta.php");
+        exit();
+    }
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LUXO FLEX</title>
-        <link rel="stylesheet" type="text/css" href="etiquetas.css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
-        </style>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXO FLEX</title>
+    <link rel="stylesheet" type="text/css" href="Perfil.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+    </style>
+</head>
 <body>
     <header>
         <nav>
@@ -91,38 +117,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_domicilio"])) {
     <div class="card-perfil">
         <h2>Editar Domicilio</h2>
         <form action="editar_domicilio.php?id=<?php echo $id_domicilio; ?>" method="post">
-            <!-- Campos del formulario -->
-            <!-- País -->
             <div class="card-domicilio">
                 <label for="pais">País:</label>
                 <input type="text" name="pais" required value="<?php echo $domicilio['pais']; ?>">
             </div>
-            <!-- Ciudad -->
             <div class="card-domicilio">
                 <label for="ciudad">Ciudad:</label>
                 <input type="text" name="ciudad" required value="<?php echo $domicilio['ciudad']; ?>">
             </div>
-            <!-- Estado -->
             <div class="card-domicilio">
                 <label for="estado">Estado:</label>
                 <input type="text" name="estado" required value="<?php echo $domicilio['Estado']; ?>">
             </div>
-            <!-- Dirección -->
             <div class="card-domicilio">
                 <label for="direccion">Dirección:</label>
                 <input type="text" name="direccion" required value="<?php echo $domicilio['direccion']; ?>">
             </div>
-            <!-- Código Postal -->
             <div class="card-domicilio">
                 <label for="codigo_postal">Código Postal:</label>
                 <input type="text" name="codigo_postal" required value="<?php echo $domicilio['codigo_postal']; ?>">
             </div>
-            <!-- RFC -->
             <div class="card-domicilio">
                 <label for="rfc">RFC:</label>
                 <input type="text" name="rfc" required value="<?php echo $domicilio['rfc']; ?>">
             </div>
+            <div class="card-domicilio">
             <button type="submit" name="update_domicilio" class="button">Actualizar Domicilio</button>
+            </div>
         </form>
     </div>
 </body>

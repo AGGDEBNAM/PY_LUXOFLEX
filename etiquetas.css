@@ -231,8 +231,7 @@ h2 {
   margin: 0 auto;
   width: 100%;
 }
-
-
+/*
 .card-perfil .card-etiqueta select:hover {
   background: #4f3c8954;
   color: #3e4446;
@@ -240,9 +239,19 @@ h2 {
   box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
     0 0 40px #4f3c8954;
 }
+*/
+
+.card-perfil .card-etiqueta select:hover {
+  background: #243b55;
+  color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #243b55, 0 0 10px #243b55, 0 0 20px #243b55,
+    0 0 40px #243b55;
+  transform: scale(1.05);
+}
 
 input[type="file"] {
-  display: none; /* Oculta el input original */
+  display: none;
 }
 
 .card-perfil .card-etiqueta-file {
@@ -270,4 +279,88 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+}
+
+/* tables */
+
+th,
+td {
+  border: 1px solid #3e4446;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #243b55;
+}
+
+tr:nth-child(even) {
+  background-color: #0d131a;
+}
+
+tr:nth-child(odd) {
+  background-color: #141e30;
+}
+
+button {
+  background-color: #03e9f4;
+  color: #ffffff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #01c0e6;
+}
+
+table img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-container form {
+  margin: 0;
+}
+
+.button-container button {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+}
+
+.button-container button[name="edit_etiqueta"] {
+  background-color: #4caf4f77;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button[name="delete_etiqueta"] {
+  background-color: #f4433677;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button i {
+  font-size: 18px;
+}
+
+.button-container button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }

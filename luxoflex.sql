@@ -52,9 +52,10 @@ CREATE TABLE `contacto` (
 --
 
 INSERT INTO `contacto` (`id_contacto`, `user_name`, `password`, `email`, `telefono`, `empresa`) VALUES
-(4, 'damian', '123', 'damian@ceti.mx', 3322052692, 'luxoflex'),
-(5, 'Damian123', '123', 'damian@ceti.mx', 332205, 'luxoflex'),
-(6, 'administrador', '123', 'administrador@gmail.com', 3365879272, 'luxoflex');
+(4, 'Aldo', '123', 'aldo@ceti.mx', 15551234567, 'luxoflex'),
+(5, 'Damian', '123', 'damian@ceti.mx', 15552345678, 'luxoflex'),
+(6, 'Andres', '123', 'andres@ceti.mx', 15553456789, 'luxoflex'),
+(7, 'administrador', '123', 'administrador@gmail.com', 15554567890, 'luxoflex');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,15 @@ CREATE TABLE `domicilio` (
 --
 
 INSERT INTO `domicilio` (`id_domicilio`, `pais`, `ciudad`, `Estado`, `direccion`, `codigo_postal`, `rfc`, `id_contacto`) VALUES
-(3, 'mexico', 'guadalajara', 'jalisco', 'pedro garcia C 290', 44948, '123', 5);
+(1, 'Mexico', 'Mexico City', 'CDMX', 'Avenida Insurgentes 123', 11000, 'RFC123456AAA', 4),
+(2, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Morelos 456', 44100, 'RFC123456BBB', 4),
+(3, 'Mexico', 'Monterrey', 'Nuevo Leon', 'Calle Hidalgo 789', 64000, 'RFC123456CCC', 4),
+(4, 'Mexico', 'Guadalajara', 'Jalisco', 'Avenida Vallarta 101', 45000, 'RFC654321AAA', 5),
+(5, 'Mexico', 'Mexico City', 'CDMX', 'Calle Reforma 202', 11000, 'RFC654321BBB', 5),
+(6, 'Mexico', 'Puebla', 'Puebla', 'Avenida Juarez 303', 72000, 'RFC654321CCC', 5),
+(7, 'Mexico', 'Toluca', 'Estado de Mexico', 'Calle Benito Juarez 404', 50000, 'RFC789012AAA', 6),
+(8, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Independencia 505', 44100, 'RFC789012BBB', 6),
+(9, 'Mexico', 'Queretaro', 'Queretaro', 'Avenida Constituyentes 606', 76000, 'RFC789012CCC', 6);
 
 -- --------------------------------------------------------
 
@@ -106,7 +115,15 @@ CREATE TABLE `etiqueta` (
 --
 
 INSERT INTO `etiqueta` (`id_etiqueta`, `tipo_forma`, `medida_ancho`, `medida_alto`, `medida_circunferencia`, `material_etiqueta`, `laminado`, `material_aplicacion`, `cantidad_de_colores`, `colores`, `disenio`, `id_contacto`) VALUES
-(6, 'cuadrada', 10, 10, 10, 'couche', 'mate', 'manual', 1, 'n/i', 'imagenes/', 5);
+(1, 'redonda', 5, 5, 15, 'papel', 'brillante', 'manual', 3, 'rojo, azul, verde', 'disenio1.png', 4),
+(2, 'rectangular', 8, 12, 20, 'plastico', 'mate', 'automatico', 2, 'negro, blanco', 'disenio2.png', 4),
+(3, 'cuadrada', 10, 10, 30, 'couche', 'mate', 'manual', 4, 'naranja, amarillo, negro, blanco', 'disenio3.png', 4),
+(4, 'ovalada', 7, 5, 15, 'papel', 'brillante', 'manual', 2, 'azul, rojo', 'disenio4.png', 5),
+(5, 'cuadrada', 6, 6, 12, 'plastico', 'mate', 'automatico', 3, 'verde, amarillo, negro', 'disenio5.png', 5),
+(6, 'redonda', 9, 9, 18, 'couche', 'brillante', 'manual', 1, 'naranja', 'disenio6.png', 5),
+(7, 'rectangular', 12, 15, 24, 'papel', 'mate', 'automatico', 4, 'rojo, azul, verde, negro', 'disenio7.png', 6),
+(8, 'ovalada', 10, 7, 21, 'plastico', 'brillante', 'manual', 2, 'blanco, negro', 'disenio8.png', 6),
+(9, 'cuadrada', 8, 8, 16, 'couche', 'mate', 'automatico', 3, 'naranja, azul, blanco', 'disenio9.png', 6);
 
 -- --------------------------------------------------------
 
@@ -123,6 +140,23 @@ CREATE TABLE `venta` (
   `id_contacto` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `etiqueta`
+--
+
+INSERT INTO `venta` (`num_cotizacion`, `cantidad`, `id_etiqueta`, `comentarios`, `id_domicilio`, `id_contacto`) VALUES
+(1, 100, 1, 'Urgente', 1, 4),
+(2, 200, 2, 'Regular', 2, 4),
+(3, 150, 3, 'Prioritario', 3, 4),
+(4, 300, 4, 'Normal', 4, 5),
+(5, 250, 5, 'Express', 5, 5),
+(6, 180, 6, 'Regular', 6, 5),
+(7, 220, 7, 'Urgente', 7, 6),
+(8, 270, 8, 'Normal', 8, 6),
+(9, 190, 9, 'Express', 9, 6);
+
+-- --------------------------------------------------------
 
 --
 -- Triggers `venta`
@@ -220,25 +254,25 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT for table `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_contacto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `domicilio`
 --
 ALTER TABLE `domicilio`
-  MODIFY `id_domicilio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_domicilio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `etiqueta`
 --
 ALTER TABLE `etiqueta`
-  MODIFY `id_etiqueta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_etiqueta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `num_cotizacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `num_cotizacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -270,6 +304,18 @@ BEGIN;
 DROP USER IF EXISTS 'administrador'@'localhost';
 CREATE USER 'administrador'@'localhost' IDENTIFIED BY '123';
 GRANT ALL PRIVILEGES ON *.* TO 'administrador'@'localhost' WITH GRANT OPTION;
+
+DROP USER IF EXISTS 'Aldo'@'localhost';
+CREATE USER 'Aldo'@'localhost' IDENTIFIED BY '123';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'Aldo'@'localhost';
+
+DROP USER IF EXISTS 'Damian'@'localhost';
+CREATE USER 'Damian'@'localhost' IDENTIFIED BY '123';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'Damian'@'localhost';
+
+DROP USER IF EXISTS 'Andres'@'localhost';
+CREATE USER 'Andres'@'localhost' IDENTIFIED BY '123';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'Andres'@'localhost';
 FLUSH PRIVILEGES;
 
 

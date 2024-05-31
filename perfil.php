@@ -29,6 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    if (isset($_POST["editar_perfil"])) {
+        header("Location: editar_perfil.php");
+        exit();
+    }
+
     if (isset($_POST["insert_domicilio"])) {
         try {
             $servername = "localhost";
@@ -60,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row_user_name = $result_user_name->fetch_assoc();
 
             if ($row_user_name === null) {
-                // throw new Exception("No se encontraron datos para el usuario.");
                 echo "<p>No se encontraron datos para el usuario. Redirigiendo a la página de inicio...</p>";
                 header("Refresh: 3; url=inicio.php");
                 exit();
@@ -80,6 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
+    }
+
+    if (isset($_POST["editar_domicilio"])) {
+        $edit_id = $_POST["edit_id"];
+        header("Location: editar_domicilio.php?id=$edit_id");
+        exit();
     }
 }
 
@@ -108,7 +118,6 @@ try {
     $row_user_name = $result_user_name->fetch_assoc();
 
     if ($row_user_name === null) {
-        // throw new Exception("No se encontraron datos para el usuario.");
         echo "<p>No se encontraron datos para el usuario. Redirigiendo a la página de inicio...</p>";
         header("Refresh: 3; url=inicio.php");
         exit();
@@ -139,12 +148,13 @@ try {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LUXO FLEX</title>
-        <link rel="stylesheet" type="text/css" href="perfil.css" />
+        <link rel="stylesheet" type="text/css" href="Perfil.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
         </style>
-        
     </head>
 
     <body>
@@ -181,7 +191,9 @@ try {
             echo "<p><strong>Nombre de la empresa:</strong> $empresa</p>";
             ?>
             <div class="card-domicilio">
-                <a href="editar_perfil.php" class="button">Editar Perfil</a>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <button type="submit" name="editar_perfil" class="button">Editar Perfil</button>
+                </form>
             </div>
             <h2>Inserte datos de sus domicilios.</h2>
 
@@ -216,15 +228,21 @@ try {
             </form>
 
             <h2>Domicilios Registrados</h2>
-
             <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                if (isset($_POST["edit_domicilio"])) {
-                    $edit_id = $_POST["edit_id"];
-                    header("Location: editar_domicilio.php?id=$edit_id");
-                    exit();
-                } elseif (isset($_POST["delete_domicilio"])) {
+            if (isset($_POST["delete_domicilio"])) {
+                try {
                     $delete_id = $_POST["delete_id"];
+
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "luxoflex";
+
+                    $conn = new mysqli($servername, $username, $password, $database);
+
+                    if ($conn->connect_error) {
+                        throw new Exception("Error de conexión: " . $conn->connect_error);
+                    }
 
                     $check_venta_query = "SELECT COUNT(*) as count FROM venta WHERE id_domicilio = $delete_id";
                     $result = $conn->query($check_venta_query);
@@ -245,9 +263,11 @@ try {
                             throw new Exception("Error en la consulta SQL de eliminación: " . $conn->error);
                         }
 
-                        header("Location: {$_SERVER['PHP_SELF']}");
+                        header("Location: perfil.php");
                         exit();
                     }
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
                 }
             }
             ?>
@@ -278,17 +298,18 @@ try {
                             echo "<td>{$row_domicilio['rfc']}</td>";
 
                             echo "<td>";
+                            echo "<div class='button-container'>";
                             echo "<form method='post' action='{$_SERVER['PHP_SELF']}'>";
                             echo "<input type='hidden' name='edit_id' value='{$row_domicilio['id_domicilio']}'>";
-                            echo "<button type='submit' name='edit_domicilio'>Editar</button>";
+                            echo "<button type='submit' name='editar_domicilio' title='Editar'><i class='fas fa-edit'></i></button>";
                             echo "</form>";
 
                             echo "<form method='post' action='{$_SERVER['PHP_SELF']}'>";
                             echo "<input type='hidden' name='delete_id' value='{$row_domicilio['id_domicilio']}'>";
-                            echo "<button type='submit' name='delete_domicilio'>Eliminar</button>";
+                            echo "<button type='submit' name='delete_domicilio' title='Eliminar'><i class='fas fa-trash'></i></button>";
                             echo "</form>";
+                            echo "</div>";
                             echo "</td>";
-
                             echo "</tr>";
                         }
                     } else {
