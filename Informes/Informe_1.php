@@ -3,15 +3,15 @@ require('fpdf.php');
 
 class PDF extends FPDF {
     function Header() {
-        $this->SetFont('Arial','B',12);
-        $this->Cell(0,10,'Informe de Ventas',0,1,'C');
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(0, 10, 'Informe de Ventas', 0, 1, 'C');
         $this->Ln(10);
     }
 
     function Footer() {
         $this->SetY(-15);
-        $this->SetFont('Arial','I',8);
-        $this->Cell(0,10,'Página '.$this->PageNo(),0,0,'C');
+        $this->SetFont('Arial', 'I', 8);
+        $this->Cell(0, 10, 'Página ' . $this->PageNo(), 0, 0, 'C');
     }
 
     function SalesReport($salesData) {
@@ -29,17 +29,17 @@ class PDF extends FPDF {
 
         // Imprimir filas de datos
         foreach ($salesData as $sale) {
-            foreach ($sale as $data) {
-                $this->Cell($w[key($sale)], 6, $data, 1);
-                next($sale);
-            }
+            $this->Cell($w[0], 6, $sale['user_name'], 1);
+            $this->Cell($w[1], 6, $sale['fecha'], 1);
+            $this->Cell($w[2], 6, $sale['cantidad'], 1);
+            $this->Cell($w[3], 6, $sale['disenio'], 1);
             $this->Ln();
         }
     }
 }
 
 // Conexión a la base de datos (asumiendo MySQLi)
-$mysqli = new mysqli("localhost", "root", "", "luxoflexavz");
+$mysqli = new mysqli("localhost", "root", "", "luxoflex");
 
 // Verificar la conexión
 if ($mysqli->connect_error) {
@@ -47,10 +47,16 @@ if ($mysqli->connect_error) {
 }
 
 // Consulta para obtener datos de ventas
-$query = "SELECT c.nombre AS cliente, v.fecha_venta, v.cantidad, v.disenio 
+$query = "SELECT c.user_name, v.fecha, v.cantidad, e.disenio 
           FROM venta v
-          JOIN contacto c ON v.num_cotizacion = c.num_cotizacion";
+          JOIN contacto c ON v.id_contacto = c.id_contacto
+          JOIN etiqueta e ON v.id_etiqueta = e.id_etiqueta";
 $result = $mysqli->query($query);
+
+// Verificar si hay errores en la consulta
+if (!$result) {
+    die("Error en la consulta SQL: " . $mysqli->error);
+}
 
 // Almacenar datos en un array para el informe
 $salesData = array();
@@ -68,4 +74,3 @@ $pdf->SalesReport($salesData);
 // Salida del PDF
 $pdf->Output();
 ?>
-
