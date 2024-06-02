@@ -41,7 +41,7 @@ DELIMITER ;
 CREATE TABLE `contacto` (
   `id_contacto` int(11) NOT NULL,
   `user_name` varchar(40) NOT NULL,
-  `password` varchar(25) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
   `email` varchar(75) DEFAULT NULL,
   `telefono` bigint(20) DEFAULT NULL,
   `empresa` varchar(25) DEFAULT NULL
@@ -50,15 +50,23 @@ CREATE TABLE `contacto` (
 --
 -- Dumping data for table `contacto`
 --
+
+UPDATE contacto SET password = SHA2(password, 256);
+
+INSERT INTO `contacto` (`id_contacto`, `user_name`, `password`, `email`, `telefono`, `empresa`) VALUES
+(4, 'Aldo', SHA2('123', 256), 'aldo@ceti.mx', 15551234567, 'luxoflex'),
+(5, 'Damian', SHA2('123', 256), 'damian@ceti.mx', 15552345678, 'luxoflex'),
+(6, 'Andres', SHA2('123', 256), 'andres@ceti.mx', 15553456789, 'luxoflex'),
+(7, 'administrador', SHA2('123', 256), 'administrador@gmail.com', 15554567890, 'luxoflex');
+
 /*
 INSERT INTO `contacto` (`id_contacto`, `user_name`, `password`, `email`, `telefono`, `empresa`) VALUES
-(4, 'Aldo', '123', 'aldo@ceti.mx', 15551234567, 'luxoflex'),
-(5, 'Damian', '123', 'damian@ceti.mx', 15552345678, 'luxoflex'),
-(6, 'Andres', '123', 'andres@ceti.mx', 15553456789, 'luxoflex'),
-(7, 'administrador', '123', 'administrador@gmail.com', 15554567890, 'luxoflex');
-*/
+(4, 'Aldo', '123' , 'aldo@ceti.mx', 15551234567, 'luxoflex'),
+(5, 'Damian', '123' , 'damian@ceti.mx', 15552345678, 'luxoflex'),
+(6, 'Andres', '123' , 'andres@ceti.mx', 15553456789, 'luxoflex'),
+(7, 'administrador', '123' , 'administrador@gmail.com', 15554567890, 'luxoflex');
 -- --------------------------------------------------------
-
+*/
 --
 -- Table structure for table `domicilio`
 --
@@ -77,7 +85,7 @@ CREATE TABLE `domicilio` (
 --
 -- Dumping data for table `domicilio`
 --
-/*
+
 INSERT INTO `domicilio` (`id_domicilio`, `pais`, `ciudad`, `Estado`, `direccion`, `codigo_postal`, `rfc`, `id_contacto`) VALUES
 (1, 'Mexico', 'Mexico City', 'CDMX', 'Avenida Insurgentes 123', 11000, 'RFC123456AAA', 4),
 (2, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Morelos 456', 44100, 'RFC123456BBB', 4),
@@ -88,7 +96,7 @@ INSERT INTO `domicilio` (`id_domicilio`, `pais`, `ciudad`, `Estado`, `direccion`
 (7, 'Mexico', 'Toluca', 'Estado de Mexico', 'Calle Benito Juarez 404', 50000, 'RFC789012AAA', 6),
 (8, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Independencia 505', 44100, 'RFC789012BBB', 6),
 (9, 'Mexico', 'Queretaro', 'Queretaro', 'Avenida Constituyentes 606', 76000, 'RFC789012CCC', 6);
-*/
+
 -- --------------------------------------------------------
 
 --
@@ -113,18 +121,18 @@ CREATE TABLE `etiqueta` (
 --
 -- Dumping data for table `etiqueta`
 --
-/*
+
 INSERT INTO `etiqueta` (`id_etiqueta`, `tipo_forma`, `medida_ancho`, `medida_alto`, `medida_circunferencia`, `material_etiqueta`, `laminado`, `material_aplicacion`, `cantidad_de_colores`, `colores`, `disenio`, `id_contacto`) VALUES
-(1, 'redonda', 5, 5, 15, 'papel', 'brillante', 'manual', 3, 'rojo, azul, verde', 'disenio1.png', 4),
-(2, 'rectangular', 8, 12, 20, 'plastico', 'mate', 'automatico', 2, 'negro, blanco', 'disenio2.png', 4),
-(3, 'cuadrada', 10, 10, 30, 'couche', 'mate', 'manual', 4, 'naranja, amarillo, negro, blanco', 'disenio3.png', 4),
-(4, 'ovalada', 7, 5, 15, 'papel', 'brillante', 'manual', 2, 'azul, rojo', 'disenio4.png', 5),
-(5, 'cuadrada', 6, 6, 12, 'plastico', 'mate', 'automatico', 3, 'verde, amarillo, negro', 'disenio5.png', 5),
-(6, 'redonda', 9, 9, 18, 'couche', 'brillante', 'manual', 1, 'naranja', 'disenio6.png', 5),
-(7, 'rectangular', 12, 15, 24, 'papel', 'mate', 'automatico', 4, 'rojo, azul, verde, negro', 'disenio7.png', 6),
-(8, 'ovalada', 10, 7, 21, 'plastico', 'brillante', 'manual', 2, 'blanco, negro', 'disenio8.png', 6),
-(9, 'cuadrada', 8, 8, 16, 'couche', 'mate', 'automatico', 3, 'naranja, azul, blanco', 'disenio9.png', 6);
-*/
+(1, 'redonda', 5, 5, 15, 'papel', 'brillante', 'manual', 3, 'rojo, azul, verde', 'imagenes/disenio1.png', 4),
+(2, 'rectangular', 8, 12, 20, 'plastico', 'mate', 'automatico', 2, 'negro, blanco', 'imagenes/disenio2.png', 4),
+(3, 'cuadrada', 10, 10, 30, 'couche', 'mate', 'manual', 4, 'naranja, amarillo, negro, blanco', 'imagenes/disenio3.png', 4),
+(4, 'ovalada', 7, 5, 15, 'papel', 'brillante', 'manual', 2, 'azul, rojo', 'imagenes/disenio4.png', 5),
+(5, 'cuadrada', 6, 6, 12, 'plastico', 'mate', 'automatico', 3, 'verde, amarillo, negro', 'imagenes/disenio5.png', 5),
+(6, 'redonda', 9, 9, 18, 'couche', 'brillante', 'manual', 1, 'naranja', 'imagenes/disenio6.png', 5),
+(7, 'rectangular', 12, 15, 24, 'papel', 'mate', 'automatico', 4, 'rojo, azul, verde, negro', 'imagenes/disenio7.png', 6),
+(8, 'ovalada', 10, 7, 21, 'plastico', 'brillante', 'manual', 2, 'blanco, negro', 'imagenes/disenio8.png', 6),
+(9, 'cuadrada', 8, 8, 16, 'couche', 'mate', 'automatico', 3, 'naranja, azul, blanco', 'imagenes/disenio9.png', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -144,7 +152,7 @@ CREATE TABLE `venta` (
 --
 -- Dumping data for table `etiqueta`
 --
-/*
+
 INSERT INTO `venta` (`num_cotizacion`, `cantidad`, `id_etiqueta`, `comentarios`, `id_domicilio`, `id_contacto`) VALUES
 (1, 100, 1, 'Urgente', 1, 4),
 (2, 200, 2, 'Regular', 2, 4),
@@ -155,7 +163,7 @@ INSERT INTO `venta` (`num_cotizacion`, `cantidad`, `id_etiqueta`, `comentarios`,
 (7, 220, 7, 'Urgente', 7, 6),
 (8, 270, 8, 'Normal', 8, 6),
 (9, 190, 9, 'Express', 9, 6);
-*/
+
 -- --------------------------------------------------------
 
 --
@@ -317,9 +325,8 @@ DROP USER IF EXISTS 'Andres'@'localhost';
 CREATE USER 'Andres'@'localhost' IDENTIFIED BY '123';
 GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'Andres'@'localhost';
 FLUSH PRIVILEGES;
-
-
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

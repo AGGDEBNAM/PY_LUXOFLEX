@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
         <nav>
             <div class="logo">
-                <a href="inicio_admins.php">
+                <a href="Inicio_admins.php">
                     <img src="img_py/LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
             </div>

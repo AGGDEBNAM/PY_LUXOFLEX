@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Generar una venta</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="Venta.css">
+    <link rel="stylesheet" type="text/css" href="Venta.css?v=1.0">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<tr>";
                         echo "<td>{$row_venta['num_cotizacion']}</td>";
                         echo "<td>{$row_venta['cantidad']}</td>";
-                        echo "<td><img src='{$row_venta['disenio']}' alt='Diseño' class='design-image'></td>";
+                        echo "<td><img src='{$row_venta['disenio']}?v=" . time() . "' alt='Diseño' class='design-image'></td>";
                         echo "<td>{$row_venta['comentarios']}</td>";
                         echo "<td>{$row_venta['direccion']}</td>";
                         echo "<td>{$row_venta['fecha']}</td>";

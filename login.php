@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel="stylesheet" href="login.css">
-
+    <link rel="stylesheet" href="Login.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
     </style>
-
 </head>
-
 <body>
-
     <header>
         <nav>
             <div class="logo">
@@ -36,7 +31,6 @@
             </div>
         </nav>
     </header>
-
 
     <div class="login-box">
         <h2>Login</h2>
@@ -61,12 +55,15 @@
                         die("Error de conexión: " . $conn->connect_error);
                     }
 
-                    $stmt = $conn->prepare("SELECT * FROM contacto WHERE user_name = ? AND password = ?");
-                    $stmt->bind_param("ss", $usuario, $contrasena);
+                    $stmt = $conn->prepare("SELECT password FROM contacto WHERE user_name = ?");
+                    $stmt->bind_param("s", $usuario);
                     $stmt->execute();
-                    $result = $stmt->get_result();
+                    $stmt->store_result();
+                    $stmt->bind_result($hashed_password);
+                    $stmt->fetch();
 
-                    if ($result->num_rows == 1) {
+                    // Verificar la contraseña encriptada con SHA-256
+                    if ($stmt->num_rows == 1 && hash('sha256', $contrasena) === $hashed_password) {
                         $_SESSION['usuario'] = $usuario;
 
                         if ($usuario === "administrador") {
@@ -117,7 +114,5 @@
             </button>
         </form>
     </div>
-
 </body>
-
 </html>

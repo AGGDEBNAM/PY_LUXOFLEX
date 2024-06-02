@@ -123,47 +123,6 @@ nav {
     0 0 40px #243b55;
 }
 
-.login-box {
-  background-color: #ffffff;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-box h2 {
-  color: #03e9f4;
-}
-
-.login-box .cot-box label {
-  display: block;
-  margin-top: 10px;
-}
-
-.login-box .cot-box select,
-.login-box .cot-box input {
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-}
-
-.login-box .cot-box select {
-  width: 100%;
-}
-
-.login-box .cot-box input[type="submit"] {
-  background-color: #03e9f4;
-  color: #ffffff;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.login-box .cot-box input[type="submit"]:hover {
-  background-color: #01c0e6;
-}
-
 .card-perfil {
   padding: 20px;
   margin: 20px;
@@ -195,111 +154,6 @@ h2 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.card-perfil .card-venta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1px;
-  width: 30%;
-  padding: 10px;
-  margin: 15px;
-  border-radius: 5px;
-  box-shadow: 0 15px 25px #00000099;
-  background: #00000080;
-  margin-bottom: 25px;
-}
-
-.card-perfil .card-venta label {
-  top: 30px;
-  left: 0;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #3e4446;
-  pointer-events: none;
-  transition: 0.5s;
-}
-
-.card-perfil .card-venta input {
-  width: 100%;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #3e4446;
-  margin-bottom: 10px;
-  border: none;
-  border-bottom: 1px solid #3e4446;
-  outline: none;
-  background: transparent;
-}
-
-.card-perfil .card-venta input:-webkit-autofill,
-.card-perfil .card-venta input:-webkit-autofill:focus,
-.card-perfil .card-venta input:-webkit-autofill:hover,
-.card-perfil .card-venta input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
-  -webkit-text-fill-color: #3e4446 !important;
-  background-clip: content-box !important;
-  background-color: transparent !important;
-  transition: background-color 5000s ease-in-out 0s !important;
-}
-
-.card-perfil .card-venta button {
-  color: #243b55;
-  display: inline-block;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: 0.3s;
-  background: transparent;
-  cursor: pointer;
-  letter-spacing: 3px;
-  overflow: hidden;
-  text-transform: uppercase;
-  margin: 0 auto;
-}
-
-.card-perfil .card-venta button:hover {
-  background: #4f3c8954;
-  color: #3e4446;
-  border-radius: 5px;
-  box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
-    0 0 40px #4f3c8954;
-}
-
-.card-perfil .card-venta select {
-  color: #3e4446;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: 0.3s;
-  background: transparent;
-  cursor: pointer;
-  letter-spacing: 3px;
-  overflow: hidden;
-  text-transform: uppercase;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/*
-.card-perfil .card-venta select:hover {
-  background: #4f3c8954;
-  color: #3e4446;
-  border-radius: 5px;
-  box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
-    0 0 40px #4f3c8954;
-}
-*/
-
-.card-perfil .card-venta select:hover {
-  background: #243b55;
-  color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 2px #243b55, 0 0 10px #243b55, 0 0 20px #243b55,
-    0 0 40px #243b55;
-  transform: scale(1.05);
 }
 
 table {
@@ -346,7 +200,7 @@ button:hover {
 table img.design-image {
   width: 100px;
   height: 100px;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   margin: 0 auto;
 }

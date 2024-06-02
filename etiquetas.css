@@ -192,6 +192,17 @@ h2 {
   background: transparent;
 }
 
+.card-perfil .card-etiqueta input:-webkit-autofill,
+.card-perfil .card-etiqueta input:-webkit-autofill:focus,
+.card-perfil .card-etiqueta input:-webkit-autofill:hover,
+.card-perfil .card-etiqueta input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #3e4446 !important;
+  background-clip: content-box !important;
+  background-color: transparent !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
 .card-perfil .card-etiqueta button {
   color: #243b55;
   display: inline-block;
@@ -318,7 +329,7 @@ button:hover {
 table img {
   width: 100px;
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .button-container {

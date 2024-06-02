@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["insert_domicilio"])) {
         try {
+
             $servername = "localhost";
             $username = "root";
             $password = "";
@@ -72,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $id_contacto = $row_user_name['id_contacto'];
 
-            $insert_query = "INSERT INTO domicilio (pais, ciudad, Estado, direccion, codigo_postal, rfc, id_contacto) 
+            $insert_query = "INSERT INTO domicilio (pais, ciudad, Estado, direccion, codigo_postal, rfc, id_contacto)
                             VALUES ('$pais', '$ciudad', '$estado', '$direccion', $codigo_postal, '$rfc', $id_contacto)";
 
             if ($conn->query($insert_query) === false) {
@@ -87,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST["editar_domicilio"])) {
+
         $edit_id = $_POST["edit_id"];
         header("Location: editar_domicilio.php?id=$edit_id");
         exit();
@@ -148,10 +150,8 @@ try {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LUXO FLEX</title>
-        <link rel="stylesheet" type="text/css" href="Perfil.css" />
+        <link rel="stylesheet" type="text/css" href="Perfil.css?v=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
         </style>
@@ -184,17 +184,20 @@ try {
         <div class="card-perfil">
 
             <h1>informacion del perfil.</h1>
+
             <?php
             echo "<p><strong>Nombre de usuario:</strong> $user_name</p>";
             echo "<p><strong>Email:</strong> $email</p>";
             echo "<p><strong>Teléfono:</strong> $telefono</p>";
             echo "<p><strong>Nombre de la empresa:</strong> $empresa</p>";
             ?>
+
             <div class="card-domicilio">
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <button type="submit" name="editar_perfil" class="button">Editar Perfil</button>
                 </form>
             </div>
+
             <h2>Inserte datos de sus domicilios.</h2>
 
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
@@ -228,6 +231,7 @@ try {
             </form>
 
             <h2>Domicilios Registrados</h2>
+
             <?php
             if (isset($_POST["delete_domicilio"])) {
                 try {
@@ -271,6 +275,7 @@ try {
                 }
             }
             ?>
+
             <table>
                 <thead>
                     <tr>
@@ -285,6 +290,7 @@ try {
                     </tr>
                 </thead>
                 <tbody>
+
                     <?php
                     if ($result_domicilios->num_rows > 0) {
                         while ($row_domicilio = $result_domicilios->fetch_assoc()) {
@@ -316,9 +322,11 @@ try {
                         echo "<tr><td colspan='8'>No hay domicilios registrados.</td></tr>";
                     }
                     ?>
+
                 </tbody>
             </table>
         </div>
+
     <?php
 
 } catch (Exception $e) {

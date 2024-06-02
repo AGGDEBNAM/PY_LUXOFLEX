@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST['in_tel'];
     $empresa = $_POST['in_empresa'];
 
+    // Encriptar la contraseña con SHA-256
+    $contrasena_encriptada = hash('sha256', $contrasena);
+
     // Conexión a la base de datos
     $servername = "localhost";
     $username = "root";
@@ -42,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Insertar el nuevo usuario
         $insert_query = "INSERT INTO `contacto` (`user_name`, `password`, `email`, `telefono`, `empresa`) 
-                         VALUES ('$nombre_usuario', '$contrasena', '$email', '$telefono', '$empresa')";
+                         VALUES ('$nombre_usuario', '$contrasena_encriptada', '$email', '$telefono', '$empresa')";
 
         if ($conn->query($insert_query) === TRUE) {
             $_SESSION['success_message'] = "Usuario creado con éxito";
@@ -78,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Sign Up Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="sign_up.css">
+    <link rel="stylesheet" type="text/css" href="Sign_up.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
     </style>
