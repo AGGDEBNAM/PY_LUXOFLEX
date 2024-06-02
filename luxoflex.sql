@@ -183,8 +183,11 @@ DELIMITER ;
 -- (See below for the actual view)
 --
 CREATE TABLE `vista_etiquetas` (
-`medida_alto` smallint(6)
+`id_etiqueta` int(11) NOT NULL
+,`cantidad` int(11)
+,`medida_alto` smallint(6)
 ,`medida_ancho` smallint(6)
+,`medida_circunferencia` smallint(6)
 ,`disenio` varchar(255)
 ,`user_name` varchar(40)
 );
@@ -201,6 +204,23 @@ CREATE TABLE `vista_ventas` (
 ,`diseño_etiqueta` varchar(255)
 ,`direccion` varchar(65)
 ,`codigo_postal` int(5)
+,`id_etiqueta` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `vista_detalle_etiquetas`
+-- (See below for the actual view)
+--
+CREATE TABLE `vista_detalle_etiquetas` (
+`id_etiqueta` int(11) NOT NULL
+,`tipo_forma` varchar(20)
+,`material_etiqueta` varchar(30)
+,`laminado` varchar(9)
+,`material_aplicacion` varchar(30)
+,`colores` varchar(80)
+,`user_name` varchar(40)
 );
 
 -- --------------------------------------------------------
@@ -210,16 +230,26 @@ CREATE TABLE `vista_ventas` (
 --
 DROP TABLE IF EXISTS `vista_etiquetas`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_etiquetas`  AS SELECT `e`.`medida_alto` AS `medida_alto`, `e`.`medida_ancho` AS `medida_ancho`, `e`.`disenio` AS `disenio`, `c`.`user_name` AS `user_name` FROM (`etiqueta` `e` join `contacto` `c` on(`e`.`id_contacto` = `c`.`id_contacto`)) ;
+/*CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_etiquetas` AS SELECT e.id_etiqueta AS id_etiqueta, e.medida_alto AS medida_alto, e.medida_ancho AS medida_ancho, e.medida_circunferencia AS medida_circunferencia, e.disenio AS disenio, c.user_name AS user_name FROM etiqueta e JOIN contacto c ON e.id_contacto = c.id_contacto;
+-- --------------------------------------------------------*/
 
--- --------------------------------------------------------
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_etiquetas` AS SELECT e.id_etiqueta AS id_etiqueta, e.medida_alto AS medida_alto, e.medida_ancho AS medida_ancho, e.medida_circunferencia AS medida_circunferencia, e.disenio AS disenio, c.user_name AS user_name, COALESCE(SUM(v.cantidad), 0) AS total_cantidad FROM etiqueta e JOIN contacto c ON e.id_contacto = c.id_contacto LEFT JOIN venta v ON e.id_etiqueta = v.id_etiqueta GROUP BY e.id_etiqueta, e.medida_alto, e.medida_ancho, e.medida_circunferencia, e.disenio, c.user_name;
 
 --
 -- Structure for view `vista_ventas`
 --
 DROP TABLE IF EXISTS `vista_ventas`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_ventas`  AS SELECT `venta`.`fecha` AS `fecha`, `contacto`.`user_name` AS `usuario`, `etiqueta`.`disenio` AS `diseño_etiqueta`, `domicilio`.`direccion` AS `direccion`, `domicilio`.`codigo_postal` AS `codigo_postal` FROM (((`venta` join `contacto` on(`venta`.`id_contacto` = `contacto`.`id_contacto`)) join `etiqueta` on(`venta`.`id_etiqueta` = `etiqueta`.`id_etiqueta`)) join `domicilio` on(`venta`.`id_domicilio` = `domicilio`.`id_domicilio`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_ventas` AS SELECT v.fecha AS fecha, c.user_name AS usuario, e.disenio AS diseño_etiqueta, d.direccion AS direccion, d.codigo_postal AS codigo_postal, v.id_etiqueta AS id_etiqueta FROM venta v JOIN contacto c ON v.id_contacto = c.id_contacto JOIN etiqueta e ON v.id_etiqueta = e.id_etiqueta JOIN domicilio d ON v.id_domicilio = d.id_domicilio;
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vista_detalle_etiquetas`
+--
+DROP TABLE IF EXISTS `vista_detalle_etiquetas`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_detalle_etiquetas` AS SELECT e.id_etiqueta AS id_etiqueta, e.tipo_forma AS tipo_forma, e.material_etiqueta AS material_etiqueta, e.laminado AS laminado, e.material_aplicacion AS material_aplicacion, e.colores AS colores, e.id_contacto AS id_contacto,c.user_name AS user_name FROM etiqueta e JOIN contacto c ON e.id_contacto = c.id_contacto;
+-- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables

@@ -131,6 +131,75 @@ nav {
   background: #00000080;
 }
 
+.card-perfil .card-bar {
+  display: flexbox;
+  flex-wrap: wrap;
+  gap: 1px;
+  width: 30%;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0 15px 25px #00000099;
+  background: #00000080;
+  margin-bottom: 50px;
+}
+
+.card-perfil .card-bar label {
+  top: 30px;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #3e4446;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.card-perfil .card-bar input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #3e4446;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #3e4446;
+  outline: none;
+  background: transparent;
+}
+
+.card-perfil .card-bar .search-bar label {
+  top: 30px;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #3e4446;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.card-perfil .card-bar .search-bar input {
+  color: #3e4446;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 3px;
+  overflow: hidden;
+  text-transform: uppercase;
+  margin: 20px 0 auto;
+  width: 75%;
+}
+
+.card-perfil .card-bar .search-bar input:hover {
+  background: #4f3c8954;
+  color: #3e4446;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #4f3c8954, 0 0 10px #4f3c8954, 0 0 20px #4f3c8954,
+    0 0 40px #4f3c8954;
+}
+
 .card-perfil h1,
 h2 {
   color: #3e3b8f54;
@@ -157,7 +226,7 @@ h2 {
 }
 
 table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   margin-top: 20px;
 }
@@ -203,4 +272,63 @@ table img.design-image {
   object-fit: cover;
   display: block;
   margin: 0 auto;
+}
+
+/* Ajustar el ancho de las columnas */
+.card-perfil .ventas-col-id {
+  width: 50px;
+}
+.card-perfil .ventas-col-fecha {
+  width: 300px;
+}
+.card-perfil .ventas-col-direccion {
+  width: 300px;
+}
+.card-perfil .ventas-col-codigo {
+  width: 300px;
+}
+.card-perfil .ventas-col-diseno {
+  width: 350px;
+}
+.card-perfil .ventas-col-usuario {
+  width: 120px;
+}
+.card-perfil .etiquetas-col-id {
+  width: 50px;
+}
+.card-perfil .etiquetas-col-alto {
+  width: 220px;
+}
+.card-perfil .etiquetas-col-ancho {
+  width: 220px;
+}
+.card-perfil .etiquetas-col-circunferencia {
+  width: 220px;
+}
+.card-perfil .etiquetas-col-diseno {
+  width: 350px;
+}
+.card-perfil .etiquetas-col-usuario {
+  width: 120px;
+}
+.card-perfil .etiquetas-full-id {
+  width: 50px;
+}
+.card-perfil .etiquetas-full-forma {
+  width: 220px;
+}
+.card-perfil .etiquetas-full-mat {
+  width: 220px;
+}
+.card-perfil .etiquetas-full-laminado {
+  width: 220px;
+}
+.card-perfil .etiquetas-full-mat-aplicacion {
+  width: 220px;
+}
+.card-perfil .etiquetas-full-colores {
+  width: 350px;
+}
+.card-perfil .etiquetas-full-usuario {
+  width: 120px;
 }

@@ -96,6 +96,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,8 +104,19 @@ $conn->close();
     <link rel="stylesheet" type="text/css" href="Etiquetas.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+        .card-etiqueta-file img {
+            display: block;
+            margin-left: 30px;
+        }
+
+        .card-etiqueta-file span {
+            margin-left: 15px;
+            color: #408080;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -202,17 +214,40 @@ $conn->close();
                 <input type="text" name="colores" id="colores" value="<?php echo $etiqueta['colores']; ?>" required>
             </div>
 
-            <!-- Diseño (Archivo) -->
             <div class="card-etiqueta-file">
-                <label for="disenio">Seleccionar Archivo (opcional):</label>
-                <input type="file" name="disenio" id="disenio" accept="image/*">
+                <label for="disenio">Seleccionar Archivo:</label>
+                <input type="file" name="disenio" id="disenio" accept="image/*" onchange="mostrarVistaPrevia()" />
+                <span id="nombreArchivo"></span>
+                <img id="vistaPrevia" src="" alt="Vista Previa" style="display:none; width: 75px; height: auto;" />
             </div>
-            
+
             <div class="card-etiqueta">
-            <button type="submit" name="update_etiqueta" class="button">Actualizar Etiqueta</button>
+                <button type="submit" name="update_etiqueta" class="button">Actualizar Etiqueta</button>
             </div>
 
         </form>
     </div>
 </body>
+<script>
+    function mostrarVistaPrevia() {
+        var input = document.getElementById('disenio');
+        var nombreArchivo = document.getElementById('nombreArchivo');
+        var vistaPrevia = document.getElementById('vistaPrevia');
+
+        if (input.files.length > 0) {
+            nombreArchivo.textContent = ' imagenes/' + input.files[0].name;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                vistaPrevia.src = e.target.result;
+                vistaPrevia.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            nombreArchivo.textContent = '';
+            vistaPrevia.src = '';
+            vistaPrevia.style.display = 'none';
+        }
+    }
+</script>
+
 </html>

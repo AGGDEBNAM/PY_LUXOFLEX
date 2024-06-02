@@ -19,7 +19,7 @@ class PDF extends FPDF {
         $header = array('Cliente', 'Fecha de Venta', 'Cantidad', 'Diseño');
 
         // Anchuras de las columnas
-        $w = array(40, 40, 30, 80);
+        $w = array(50, 50, 60, 70);
 
         // Imprimir títulos de columnas
         for ($i = 0; $i < count($header); $i++) {
@@ -29,10 +29,10 @@ class PDF extends FPDF {
 
         // Imprimir filas de datos
         foreach ($salesData as $sale) {
-            $this->Cell($w[0], 6, $sale['user_name'], 1);
-            $this->Cell($w[1], 6, $sale['fecha'], 1);
-            $this->Cell($w[2], 6, $sale['cantidad'], 1);
-            $this->Cell($w[3], 6, $sale['disenio'], 1);
+            $this->Cell($w[0], 6, $sale['user_name'], 1, 0, 'C');
+            $this->Cell($w[1], 6, $sale['fecha'], 1, 0, 'C');
+            $this->Cell($w[2], 6, $sale['cantidad'], 1, 0, 'C');
+            $this->Cell($w[3], 6, $sale['disenio'], 1, 0, 'C');
             $this->Ln();
         }
     }
@@ -65,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Crear instancia de PDF
-$pdf = new PDF();
+$pdf = new PDF('L', 'mm', 'A3');
 $pdf->AddPage();
 
 // Generar informe utilizando el método personalizado
@@ -73,4 +73,3 @@ $pdf->SalesReport($salesData);
 
 // Salida del PDF
 $pdf->Output();
-?>

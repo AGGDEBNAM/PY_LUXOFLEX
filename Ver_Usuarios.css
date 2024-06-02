@@ -1,50 +1,186 @@
-/* estilos.css */
+html {
+  height: 100%;
+}
 
 body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
   margin: 0;
+  padding: 0;
+  background-color: #141e30;
+  /*background: linear-gradient(#141e30, #243b55);*/
+  font-family: "Kanit", sans-serif;
+  font-weight: 300;
 }
 
-h1 {
-  color: #3498db;
+/* SCROLLBAR */
+
+body {
+  --sb-track-color: #232e33;
+  --sb-thumb-color: #6baf8d;
+  --sb-size: 6px;
+
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 25px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 25px;
+}
+
+/* HEADER CODE*/
+
+header {
+  padding: 20px 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: #0d131a;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #0d131a;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.5em;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.logo img {
+  max-height: 50px;
+}
+
+.menu {
+  display: flex;
+}
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.menu li {
+  margin: 0 15px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.2em;
+  transition: 0.3s;
+}
+
+.menu a:hover {
+  color: #03e9f4;
+}
+
+.cta-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.cta-buttons .button {
+  color: #243b55;
+  display: inline-block;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: 0.3s;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 3px;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.cta-buttons .button:hover {
+  background: #243b55;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #243b55, 0 0 10px #243b55, 0 0 20px #243b55,
+    0 0 40px #243b55;
+}
+
+.card-perfil {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 15px 25px #00000099;
+  background: #00000080;
+}
+
+.card-perfil h1,
+h2 {
+  color: #3e3b8f54;
   text-align: center;
-  font-size: 30px;
+  text-transform: uppercase;
+  font-family: "Kanit", Light 300;
 }
 
-p {
-  color: #3498db;
+.card-perfil p {
+  color: #4f3c8954;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Kanit", Light 300;
+  background-color: #00000080;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #3e4446;
+}
+
+.card-perfil form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 table {
-  width: 75%;
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  text-align: center;
+  margin-top: 20px;
 }
+
+/* tables */
 
 th,
 td {
-  border: 1px solid #000000;
-  padding: 8px;
-  text-align: center;
-  vertical-align: middle;
-  box-shadow: 0 0 10px #334a8649, 0 0 20px #334a8649, 0 0 30px #334a8649;
+  border: 1px solid #3e4446;
+  padding: 10px;
+  text-align: left;
 }
 
 th {
-  background-color: #c237db10;
-  text-align: center;
-  vertical-align: middle;
+  background-color: #243b55;
+}
+
+tr:nth-child(even) {
+  background-color: #0d131a;
+}
+
+tr:nth-child(odd) {
+  background-color: #141e30;
 }
 
 form {
@@ -67,4 +203,48 @@ input[type="submit"]:hover {
 
 input[type="text"]:checked {
   transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-container form {
+  margin: 0;
+}
+
+.button-container button {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+}
+
+.button-container button[name="edit_etiqueta"] {
+  background-color: #4caf4f77;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button[name="delete_etiqueta"] {
+  background-color: #f4433677;
+  color: rgba(155, 155, 155, 0.712);
+}
+
+.button-container button i {
+  font-size: 18px;
+}
+
+.button-container button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }

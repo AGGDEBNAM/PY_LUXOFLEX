@@ -4,7 +4,17 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: inicio.php");
     exit();
 }
+if ($_SESSION['usuario'] !== 'administrador') {
+    header("Location: inicio_users.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (isset($_POST["ver_users"])) {
+        header("Location: Ver_Usuarios.php");
+        exit();
+    }
 
     if (isset($_POST["admin_users"])) {
         header("Location: viewAdmin.php");
@@ -18,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUXO FLEX</title>
-    <link rel="stylesheet" type="text/css" href="inicio.css" />
+    <link rel="stylesheet" type="text/css" href="Inicio.css" />
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
@@ -39,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <header>
         <nav>
             <div class="logo">
-                <a href="Inicio_admins.php">
+                <a href="inicio_admins.php">
                     <img src="img_py/LUXFLEX.PNG" alt="LUXO FLEX" />
                 </a>
             </div>
@@ -51,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="cta-buttons">
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <button type="submit" name="ver_users" class="button">Ver Users</button>
                     <button type="submit" name="admin_users" class="button">admin users</button>
                     <button type="submit" name="logout" class="button">logout</button>
                 </form>
