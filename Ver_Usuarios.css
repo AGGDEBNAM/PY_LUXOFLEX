@@ -248,3 +248,58 @@ input[type="text"]:checked {
   transform: scale(1.1);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+
+.card-perfil .card-bar table {
+  width: auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.card-perfil .num_cotizacion {
+  width: 240px;
+}
+.card-perfil .cantidad {
+  width: 100px;
+}
+.card-perfil .id_etiquetas {
+  width: 155px;
+}
+.card-perfil .comentarios {
+  width: 140px;
+}
+.card-perfil .domicilio {
+  width: 300px;
+}
+.card-perfil .contacto {
+  width: 160px;
+}
+.card-perfil .fecha {
+  width: 225px;
+}
+.card-perfil .buscar{
+  width: 95px;
+}
+.card-perfil .num_cotizacion input{
+  width: 100%;
+}
+.card-perfil .cantidad input{
+  width: 100%;
+}
+.card-perfil .id_etiquetas input{
+  width: 100%;
+}
+.card-perfil .comentarios input{
+  width: 100%;
+}
+.card-perfil .domicilio input{
+  width: 100%;
+}
+.card-perfil .contacto input{
+  width: 100%;
+}
+.card-perfil .fecha input{
+  width: 100%;
+}
+.card-perfil .buscar input{
+  width: 100%;
+}

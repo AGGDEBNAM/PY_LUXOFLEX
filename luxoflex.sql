@@ -90,12 +90,20 @@ INSERT INTO `domicilio` (`id_domicilio`, `pais`, `ciudad`, `Estado`, `direccion`
 (1, 'Mexico', 'Mexico City', 'CDMX', 'Avenida Insurgentes 123', 11000, 'RFC123456AAA', 4),
 (2, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Morelos 456', 44100, 'RFC123456BBB', 4),
 (3, 'Mexico', 'Monterrey', 'Nuevo Leon', 'Calle Hidalgo 789', 64000, 'RFC123456CCC', 4),
-(4, 'Mexico', 'Guadalajara', 'Jalisco', 'Avenida Vallarta 101', 45000, 'RFC654321AAA', 5),
-(5, 'Mexico', 'Mexico City', 'CDMX', 'Calle Reforma 202', 11000, 'RFC654321BBB', 5),
-(6, 'Mexico', 'Puebla', 'Puebla', 'Avenida Juarez 303', 72000, 'RFC654321CCC', 5),
-(7, 'Mexico', 'Toluca', 'Estado de Mexico', 'Calle Benito Juarez 404', 50000, 'RFC789012AAA', 6),
-(8, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Independencia 505', 44100, 'RFC789012BBB', 6),
-(9, 'Mexico', 'Queretaro', 'Queretaro', 'Avenida Constituyentes 606', 76000, 'RFC789012CCC', 6);
+(4, 'Mexico', 'Tijuana', 'Baja California', 'Calle Revolución 123', 22000, 'RFC123456DDD', 4),
+(5, 'Mexico', 'Cancún', 'Quintana Roo', 'Avenida Bonampak 456', 77500, 'RFC123456EEE', 4),
+
+(6, 'Mexico', 'Guadalajara', 'Jalisco', 'Avenida Vallarta 101', 45000, 'RFC654321AAA', 5),
+(7, 'Mexico', 'Mexico City', 'CDMX', 'Calle Reforma 202', 11000, 'RFC654321BBB', 5),
+(8, 'Mexico', 'Puebla', 'Puebla', 'Avenida Juarez 303', 72000, 'RFC654321CCC', 5),
+(9, 'Mexico', 'Chihuahua', 'Chihuahua', 'Calle Victoria 101', 31000, 'RFC654321DDD', 5),
+(10, 'Mexico', 'Aguascalientes', 'Aguascalientes', 'Avenida Lopez Mateos 202', 20000, 'RFC654321EEE', 5),
+
+(11, 'Mexico', 'Toluca', 'Estado de Mexico', 'Calle Benito Juarez 404', 50000, 'RFC789012AAA', 6),
+(12, 'Mexico', 'Guadalajara', 'Jalisco', 'Calle Independencia 505', 44100, 'RFC789012BBB', 6),
+(13, 'Mexico', 'Queretaro', 'Queretaro', 'Avenida Constituyentes 606', 76000, 'RFC789012CCC', 6),
+(14, 'Mexico', 'Merida', 'Yucatan', 'Calle 60 789', 97000, 'RFC789012DDD', 6),
+(15, 'Mexico', 'Chihuahua', 'Chihuahua', 'Calle Victoria 101', 31000, 'RFC789012EEE', 6);
 
 -- --------------------------------------------------------
 
@@ -154,15 +162,39 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`num_cotizacion`, `cantidad`, `id_etiqueta`, `comentarios`, `id_domicilio`, `id_contacto`) VALUES
-(1, 100, 1, 'Urgente', 1, 4),
-(2, 200, 2, 'Regular', 2, 4),
-(3, 150, 3, 'Prioritario', 3, 4),
-(4, 300, 4, 'Normal', 4, 5),
-(5, 250, 5, 'Express', 5, 5),
-(6, 180, 6, 'Regular', 6, 5),
-(7, 220, 7, 'Urgente', 7, 6),
-(8, 270, 8, 'Normal', 8, 6),
-(9, 190, 9, 'Express', 9, 6);
+(1, 100, 3, 'Urgente', 1, 4),
+(2, 200, 2, 'Regular', 5, 4),
+(3, 150, 2, 'Prioritario', 3, 4),
+(4, 120, 3, 'Urgente', 1, 4),
+(5, 220, 3, 'Regular', 2, 4),
+(6, 160, 1, 'Prioritario', 3, 4),
+(7, 310, 2, 'Normal', 5, 4),
+(8, 260, 2, 'Express', 5, 4),
+(9, 190, 3, 'Regular', 1, 4),
+(10, 230, 1, 'Urgente', 2, 4),
+
+(11, 300, 6, 'Normal', 6, 5),
+(12, 250, 5, 'Express', 8, 5),
+(13, 180, 4, 'Regular', 9, 5),
+(14, 210, 6, 'Prioritario', 9, 5),
+(15, 220, 4, 'Urgente', 10, 5),
+(16, 270, 6, 'Normal', 6, 5),
+(17, 200, 4, 'Express', 7, 5),
+(18, 150, 6, 'Prioritario', 9, 5),
+(19, 240, 5, 'Urgente', 7, 5),
+(20, 180, 4, 'Regular', 10, 5),
+
+(21, 320, 7, 'Normal', 11, 6),
+(22, 270, 9, 'Express', 15, 6),
+(23, 210, 9, 'Prioritario', 11, 6),
+(24, 250, 8, 'Urgente', 14, 6),
+(25, 300, 8, 'Regular', 13, 6),
+(26, 220, 7, 'Normal', 13, 6),
+(27, 280, 8, 'Express', 14, 6),
+(28, 200, 9, 'Urgente', 12, 6),
+(29, 150, 8, 'Regular', 13, 6),
+(30, 240, 9, 'Prioritario', 13, 6);
+
 
 -- --------------------------------------------------------
 

@@ -123,6 +123,22 @@ try {
         }
     }
 
+    $search_values = [
+        'num_cotizacion' => '',
+        'cantidad' => '',
+        'id_etiqueta' => '',
+        'comentarios' => '',
+        'direccion' => '',
+        'username' => '',
+        'fecha' => ''
+    ];
+
+    foreach ($search_values as $key => $value) {
+        if (isset($_POST[$key])) {
+            $search_values[$key] = $conn->real_escape_string($_POST[$key]);
+        }
+    }
+
     $usuarios_a_excluir = ['root', 'pma', 'administrador', 'Usuario'];
 
     $sql = "SELECT User, Host, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv
@@ -132,8 +148,24 @@ try {
     $result = $conn->query($sql);
 
     $sql_ventas = "SELECT v.num_cotizacion, v.cantidad, v.id_etiqueta, v.comentarios, d.direccion, c.user_name AS username, v.fecha 
-                    FROM venta v JOIN domicilio d ON v.id_domicilio = d.id_domicilio 
+                    FROM venta v 
+                    JOIN domicilio d ON v.id_domicilio = d.id_domicilio 
                     JOIN contacto c ON v.id_contacto = c.id_contacto";
+    $conditions = [];
+    foreach ($search_values as $key => $value) {
+        if (!empty($value)) {
+            if ($key == 'username') {
+                $conditions[] = "c.user_name LIKE '%$value%'";
+            } elseif ($key == 'direccion') {
+                $conditions[] = "d.direccion LIKE '%$value%'";
+            } else {
+                $conditions[] = "v.$key LIKE '%$value%'";
+            }
+        }
+    }
+    if (count($conditions) > 0) {
+        $sql_ventas .= " WHERE " . implode(" AND ", $conditions);
+    }
     $result_ventas = $conn->query($sql_ventas);
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
@@ -151,6 +183,12 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -224,44 +262,102 @@ try {
     <p>No se encontraron usuarios.</p>
 <?php endif; ?>
 
-<?php if ($result_ventas->num_rows > 0) : ?>
-    <div class="card-perfil">
-        <h1>Ventas en MySQL:</h1>
-        <table>
-            <tr>
-                <th>Número de Cotización</th>
-                <th>Cantidad</th>
-                <th>ID de Etiqueta</th>
-                <th>Comentarios</th>
-                <th>ID de Domicilio</th>
-                <th>ID de Contacto</th>
-                <th>Fecha</th>
-                <th>Eliminar</th>
-            </tr>
-            <?php while ($row_ventas = $result_ventas->fetch_assoc()) : ?>
-                <tr>
-                    <td><?= $row_ventas['num_cotizacion'] ?></td>
-                    <td><?= $row_ventas['cantidad'] ?></td>
-                    <td><?= $row_ventas['id_etiqueta'] ?></td>
-                    <td><?= $row_ventas['comentarios'] ?></td>
-                    <td><?= $row_ventas['direccion'] ?></td>
-                    <td><?= $row_ventas['username'] ?></td>
-                    <td><?= $row_ventas['fecha'] ?></td>
-                    <td>
-                        <div class='button-container'>
-                            <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-                                <input type="hidden" name="eliminar_venta" value="<?= $row_ventas['num_cotizacion'] ?>">
-                                <button type='submit' name='delete_etiqueta' title='Eliminar'><i class='fas fa-trash'></i></button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </table>
+<div class="card-perfil">
+
+    <h1>Ventas en MySQL:</h1>
+
+    <div class="card-bar">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="searchForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="num_cotizacion"><input autocomplete="off" type="text" name="num_cotizacion" placeholder="Buscar Número de Cotización" value="<?php echo htmlspecialchars($search_values['num_cotizacion']); ?>"></th>
+                        <th class="cantidad"><input autocomplete="off" type="text" name="cantidad" placeholder="Buscar Cantidad" value="<?php echo htmlspecialchars($search_values['cantidad']); ?>"></th>
+                        <th class="id_etiquetas"><input autocomplete="off" type="text" name="id_etiqueta" placeholder="Buscar ID de Etiqueta" value="<?php echo htmlspecialchars($search_values['id_etiqueta']); ?>"></th>
+                        <th class="comentarios"><input autocomplete="off" type="text" name="comentarios" placeholder="Buscar Comentarios" value="<?php echo htmlspecialchars($search_values['comentarios']); ?>"></th>
+                        <th class="domicilio"><input autocomplete="off" type="text" name="direccion" placeholder="Buscar Dirección" value="<?php echo htmlspecialchars($search_values['direccion']); ?>"></th>
+                        <th class="contacto"><input autocomplete="off" type="text" name="username" placeholder="Buscar Usuario" value="<?php echo htmlspecialchars($search_values['username']); ?>"></th>
+                        <th class="fecha"><input autocomplete="off" type="text" name="fecha" placeholder="Buscar Fecha" value="<?php echo htmlspecialchars($search_values['fecha']); ?>"></th>
+                        <th class="buscar">
+                            <button type="submit">Buscar</button>
+                            <button type="button" onclick="limpiarCampos()">Clean</button>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </form>
     </div>
-<?php else : ?>
-    <p>No se encontraron ventas.</p>
-<?php endif; ?>
+
+    <?php if ($result_ventas->num_rows > 0) : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número de Cotización</th>
+                    <th>Cantidad</th>
+                    <th>ID de Etiqueta</th>
+                    <th>Comentarios</th>
+                    <th>ID de Domicilio</th>
+                    <th>ID de Contacto</th>
+                    <th>Fecha</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row_ventas = $result_ventas->fetch_assoc()) : ?>
+                    <tr>
+                        <td><?= $row_ventas['num_cotizacion'] ?></td>
+                        <td><?= $row_ventas['cantidad'] ?></td>
+                        <td><?= $row_ventas['id_etiqueta'] ?></td>
+                        <td><?= $row_ventas['comentarios'] ?></td>
+                        <td><?= $row_ventas['direccion'] ?></td>
+                        <td><?= $row_ventas['username'] ?></td>
+                        <td><?= $row_ventas['fecha'] ?></td>
+                        <td>
+                            <div class='button-container'>
+                                <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                                    <input type="hidden" name="eliminar_venta" value="<?= $row_ventas['num_cotizacion'] ?>">
+                                    <button type='submit' name='delete_etiqueta' title='Eliminar'><i class='fas fa-trash'></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número de Cotización</th>
+                    <th>Cantidad</th>
+                    <th>ID de Etiqueta</th>
+                    <th>Comentarios</th>
+                    <th>ID de Domicilio</th>
+                    <th>ID de Contacto</th>
+                    <th>Fecha</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8">No se encontraron resultados.</td>
+                </tr>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="inicio.js"></script>
+<script>
+    function limpiarCampos() {
+        document.querySelectorAll('#searchForm input').forEach(input => {
+            input.value = '';
+        });
+        document.getElementById('searchForm').submit();
+    }
+</script>
 
 <?php $conn->close(); ?>
 
